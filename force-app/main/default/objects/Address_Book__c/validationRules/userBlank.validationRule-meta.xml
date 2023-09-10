@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>userBlank</fullName>
+    <active>true</active>
+    <description>While Creating/updating the Address Book record Check if the User is blank then Throw Error</description>
+    <errorConditionFormula>ISBLANK( User__c )</errorConditionFormula>
+    <errorDisplayField>User__c</errorDisplayField>
+    <errorMessage>Cannot be blank please enter a value</errorMessage>
+</ValidationRule>

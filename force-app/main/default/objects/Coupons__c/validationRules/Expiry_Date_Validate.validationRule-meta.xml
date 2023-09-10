@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expiry_Date_Validate</fullName>
+    <active>true</active>
+    <description>Expiry Date should always be greater than today while creating the record</description>
+    <errorConditionFormula>ExpiryDate__c   &lt;   TODAY()</errorConditionFormula>
+    <errorDisplayField>ExpiryDate__c</errorDisplayField>
+    <errorMessage>Expiry Date should always be greater than today while creating the record</errorMessage>
+</ValidationRule>

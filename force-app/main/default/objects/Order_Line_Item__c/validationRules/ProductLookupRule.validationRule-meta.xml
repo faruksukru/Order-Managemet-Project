@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProductLookupRule</fullName>
+    <active>true</active>
+    <description>required</description>
+    <errorConditionFormula>ISBLANK( Product__c )</errorConditionFormula>
+    <errorDisplayField>Product__c</errorDisplayField>
+    <errorMessage>Cannot be blank Enter a value</errorMessage>
+</ValidationRule>
