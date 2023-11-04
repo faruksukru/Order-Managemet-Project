@@ -1,0 +1,51 @@
+<template>
+  <lightning-card title="Filter Product">
+    <lightning-button variant="success" 
+    label="Filter" 
+    title="Filter" 
+    icon-name="utility:search"
+    onclick={handleFilterClick} 
+    class="slds-m-left_x-small">
+</lightning-button>
+<div>
+    <lightning-combobox
+    name="progress"
+    label="Parent Category"
+    value={selectedParentCategory}
+    placeholder="Select Parent Category"
+    options={parentCategories}
+    onchange={handleParentCategoryChange} >
+</lightning-combobox>
+<p>{selectedParentCategory}</p>
+<template if:true={subCat1}>
+ 
+  <lightning-combobox
+  name="progress"
+  label="Sub Category1"
+  value={selectedsubCategory2}
+  placeholder="Select Sub Category"
+  options={subCategories1}
+  onchange={handleSubCategory1Change} >
+</lightning-combobox>
+
+
+</template>
+<template if:true={subCat2}>
+ 
+  <lightning-combobox
+  name="progress"
+  label="Sub Category1"
+  value={selectedsubCategory2}
+  placeholder="Select Sub Category"
+  options={subCategories2}
+  onchange={handleSubCategory1Change} >
+</lightning-combobox>
+
+
+</template>
+
+</div> 
+
+  </lightning-card>
+    
+</template>
