@@ -1,42 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>account_review_email</name>
-        <label>account review email</label>
-        <locationX>776</locationX>
-        <locationY>503</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
+        <name>Account_Under_Review_Email</name>
+        <label>Account Under Review Email</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>Account_Request__c.Account_under_review</actionName>
+        <actionType>emailAlert</actionType>
         <connector>
             <targetReference>submitAproval</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>emailBody</name>
+            <name>SObjectRowId</name>
             <value>
-                <stringValue>The {!$Record.Name} account  is under review and we will get back to you within 72 hours.</stringValue>
+                <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>customerEmails.Email__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <stringValue>The {!$Record.Name} account is under review </stringValue>
-            </value>
-        </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
+        <nameSegment>Account_Request__c.Account_under_review</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>submitAproval</name>
         <label>submitAproval</label>
-        <locationX>776</locationX>
-        <locationY>623</locationY>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
         <actionName>submit</actionName>
         <actionType>submit</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -75,7 +63,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -85,38 +73,15 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>customerEmails</name>
-        <label>customerEmails</label>
-        <locationX>776</locationX>
-        <locationY>383</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>account_review_email</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account_Request__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Email__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <start>
-        <locationX>650</locationX>
-        <locationY>48</locationY>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
         <connector>
-            <targetReference>customerEmails</targetReference>
+            <targetReference>Account_Under_Review_Email</targetReference>
         </connector>
         <object>Account_Request__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
 </Flow>

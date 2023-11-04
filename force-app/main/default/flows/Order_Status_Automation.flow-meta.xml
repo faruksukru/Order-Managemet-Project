@@ -3,7 +3,7 @@
     <actionCalls>
         <name>orderIsCancelled</name>
         <label>orderIsCancelled</label>
-        <locationX>1370</locationX>
+        <locationX>1458</locationX>
         <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
@@ -11,12 +11,6 @@
             <targetReference>getCancelledOrderItems</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailBody</name>
-            <value>
-                <elementReference>bodyoforderiscancelled</elementReference>
-            </value>
-        </inputParameters>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
@@ -27,6 +21,18 @@
             <name>emailSubject</name>
             <value>
                 <stringValue>Order is {!$Record.Status__c}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>bodyoforderiscancelled</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
@@ -61,13 +67,19 @@
                 <elementReference>bodyoforderiscreated</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
         <nameSegment>emailSimple</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>orderIsdelivered</name>
         <label>orderIsdelivered</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
@@ -75,12 +87,6 @@
             <targetReference>Send_Survey</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailBody</name>
-            <value>
-                <elementReference>bodyoforderisdelivered</elementReference>
-            </value>
-        </inputParameters>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
@@ -93,13 +99,25 @@
                 <stringValue>Order is {!$Record.Status__c}</stringValue>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>bodyoforderisdelivered</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
         <nameSegment>emailSimple</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>orderIsInProcess</name>
         <label>orderIsInProcess</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
@@ -122,13 +140,19 @@
                 <elementReference>bodyoforderisinprocess</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
         <nameSegment>emailSimple</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>orderIsShipped</name>
         <label>orderIsShipped</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>539</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
@@ -149,6 +173,12 @@
             <name>emailBody</name>
             <value>
                 <elementReference>Bodyoforderisshippedoroutfordelivery</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
@@ -186,7 +216,7 @@
     <actionCalls>
         <name>Send_Survey</name>
         <label>Send Survey</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>647</locationY>
         <actionName>project_management_survey</actionName>
         <actionType>dynamicSendSurveyInvitation</actionType>
@@ -216,7 +246,7 @@
     <assignments>
         <name>addUpdateCancelledProductRecordToCollection</name>
         <label>addUpdateCancelledProductRecordToCollection</label>
-        <locationX>1458</locationX>
+        <locationX>1546</locationX>
         <locationY>971</locationY>
         <assignmentItems>
             <assignToReference>cancelledProductionUpdate</assignToReference>
@@ -248,7 +278,7 @@
     <assignments>
         <name>assignEachCancelledProduct</name>
         <label>assignEachCancelledProduct</label>
-        <locationX>1458</locationX>
+        <locationX>1546</locationX>
         <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>updateCancelledProduct.Id</assignToReference>
@@ -315,7 +345,7 @@
     <decisions>
         <name>Check_Record_Status</name>
         <label>Check Record Status</label>
-        <locationX>1062</locationX>
+        <locationX>1150</locationX>
         <locationY>431</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -390,7 +420,7 @@
     <decisions>
         <name>isOrderCreated</name>
         <label>isOrderCreated</label>
-        <locationX>622</locationX>
+        <locationX>666</locationX>
         <locationY>323</locationY>
         <defaultConnector>
             <targetReference>Check_Record_Status</targetReference>
@@ -458,12 +488,17 @@
         <expression>{!eachProductLoop.Product__r.RemainingQuantity__c}-{!eachProductLoop.Quantity__c}</expression>
         <scale>2</scale>
     </formulas>
-    <interviewLabel>1OrderAutomation {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>1OrderAutomation</label>
+    <formulas>
+        <name>recordLinks</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Enterprise_Server_URL_510}, FIND( &apos;/services&apos;, {!$Api.Enterprise_Server_URL_510})) &amp;{!$Record.Id}</expression>
+    </formulas>
+    <interviewLabel>Order Status Automation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Order Status Automation</label>
     <loops>
         <name>eachCancelledProductItem</name>
         <label>eachCancelledProductItem</label>
-        <locationX>1370</locationX>
+        <locationX>1458</locationX>
         <locationY>755</locationY>
         <collectionReference>getCancelledOrderItems</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -510,7 +545,7 @@
     <recordLookups>
         <name>getCancelledOrderItems</name>
         <label>getCancelledOrderItems</label>
-        <locationX>1370</locationX>
+        <locationX>1458</locationX>
         <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -568,7 +603,7 @@
     <recordUpdates>
         <name>updateCancelledProductsQuantity</name>
         <label>updateCancelledProductsQuantity</label>
-        <locationX>1370</locationX>
+        <locationX>1458</locationX>
         <locationY>1163</locationY>
         <inputReference>cancelledProductionUpdate</inputReference>
     </recordUpdates>
@@ -583,7 +618,7 @@
         <inputReference>productupdate</inputReference>
     </recordUpdates>
     <start>
-        <locationX>496</locationX>
+        <locationX>540</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>isOrderCreated</targetReference>
@@ -592,62 +627,36 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <textTemplates>
         <name>bodyoforderiscancelled</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!$Record.Customer__r.FirstName},
-The {!$Record.Name} order is {!$Record.Status__c}. please see the detail information below and reason for cancellation.
-Order No: {!$Record.Name}
-Order Amount: {!$Record.Total__c}
-Shipping Address: {!$Record.Shipping_Address__c}
-Estimated Delivery Date: {!$Record.Expected_Delivery_Date__c}
-Reason for cancellation:</text>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Hi {!$Record.Customer__r.FirstName},&lt;/p&gt;&lt;p&gt;The {!$Record.Name} order is {!$Record.Status__c}. please see the detail information below and reason for cancellation.&lt;/p&gt;&lt;p&gt;Order No: {!$Record.Name}&lt;/p&gt;&lt;p&gt;Order Amount: {!$Record.Total__c}&lt;/p&gt;&lt;p&gt;Shipping Address: {!$Record.Shipping_Address__c}&lt;/p&gt;&lt;p&gt;Estimated Delivery Date: {!$Record.Expected_Delivery_Date__c}&lt;/p&gt;&lt;p&gt;Reason for cancellation:&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>bodyoforderiscreated</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!$Record.Customer__r.FirstName},
-Your {!$Record.Name} order has been created and status is {!$Record.Status__c}. please see the detail information below.
-Order No: {!$Record.Name}
-Order Amount: {!$Record.Total__c}
-Shipping Address: {!$Record.Shipping_Address__c}
-Estimated Delivery Date: {!$Record.Expected_Delivery_Date__c}
-Link to Order:</text>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Hi {!$Record.Customer__r.FirstName},&lt;/p&gt;&lt;p&gt;Your {!$Record.Name} order has been created and status is {!$Record.Status__c}. please see the detail information below.&lt;/p&gt;&lt;p&gt;Order No: {!$Record.Name}&lt;/p&gt;&lt;p&gt;Order Amount: {!$Record.Total__c}&lt;/p&gt;&lt;p&gt;Shipping Address: {!$Record.Shipping_Address__c}&lt;/p&gt;&lt;p&gt;Estimated Delivery Date: {!$Record.Expected_Delivery_Date__c}&lt;/p&gt;&lt;p&gt;Link to Order:{!recordLinks}&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>bodyoforderisdelivered</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!$Record.Customer__r.FirstName},
-The {!$Record.Name} order is {!$Record.Status__c}. please see the detail information below and click the survey link we will send to fill up the survey.
-We wish you a nice day.</text>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Hi {!$Record.Customer__r.FirstName},&lt;/p&gt;&lt;p&gt;The {!$Record.Name} order is {!$Record.Status__c}. please see the detail information below and click the survey link we will send to fill up the survey.&lt;/p&gt;&lt;p&gt;We wish you a nice day.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>bodyoforderisinprocess</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!$Record.Customer__r.FirstName},
-The {!$Record.Name} order is {!$Record.Status__c}. please see the detail information below.
-Order No: {!$Record.Name}
-Order Amount: {!$Record.Total__c}
-Shipping Address: {!$Record.Shipping_Address__c}
-Estimated Delivery Date: {!$Record.Expected_Delivery_Date__c}
-Payment Status: {!$Record.Payment_Method__c}
-Link to Order:</text>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Hi {!$Record.Customer__r.FirstName},&lt;/p&gt;&lt;p&gt;The {!$Record.Name} order is {!$Record.Status__c}. please see the detail information below.&lt;/p&gt;&lt;p&gt;Order No: {!$Record.Name}&lt;/p&gt;&lt;p&gt;Order Amount: {!$Record.Total__c}&lt;/p&gt;&lt;p&gt;Shipping Address: {!$Record.Shipping_Address__c}&lt;/p&gt;&lt;p&gt;Estimated Delivery Date: {!$Record.Expected_Delivery_Date__c}&lt;/p&gt;&lt;p&gt;Payment Status: {!$Record.Payment_Method__c}&lt;/p&gt;&lt;p&gt;Link to Order: {!recordLinks}&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>Bodyoforderisshippedoroutfordelivery</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Hi {!$Record.Customer__r.FirstName},&lt;/p&gt;&lt;p&gt;Your {!$Record.Name} order status is {!$Record.Status__c}. please see the detail information below.&lt;/p&gt;&lt;p&gt;Order No: {!$Record.Name}&lt;/p&gt;&lt;p&gt;Order Amount: {!$Record.Total__c}&lt;/p&gt;&lt;p&gt;Shipping Address: {!$Record.Shipping_Address__c}&lt;/p&gt;&lt;p&gt;Estimated Delivery Date: {!$Record.Expected_Delivery_Date__c}&lt;/p&gt;&lt;p&gt;Link to Order:&lt;/p&gt;</text>
+        <text>&lt;p&gt;Hi {!$Record.Customer__r.FirstName},&lt;/p&gt;&lt;p&gt;Your {!$Record.Name} order status is {!$Record.Status__c}. please see the detail information below.&lt;/p&gt;&lt;p&gt;Order No: {!$Record.Name}&lt;/p&gt;&lt;p&gt;Order Amount: {!$Record.Total__c}&lt;/p&gt;&lt;p&gt;Shipping Address: {!$Record.Shipping_Address__c}&lt;/p&gt;&lt;p&gt;Estimated Delivery Date: {!$Record.Expected_Delivery_Date__c}&lt;/p&gt;&lt;p&gt;Link to Order:{!recordLinks}&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>isPaymentNotCOD</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>Hi {!$Record.Customer__r.FirstName},
-This is a Payment Remiender for your {!$Record.Name} numbered order. please see the detail information below for your payment Method.
-Order No: {!$Record.Name}
-Order Amount: {!$Record.Total__c}
-Payment Method: {!$Record.Payment_Method__c}
-Link to Order:</text>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Hi {!$Record.Customer__r.FirstName},&lt;/p&gt;&lt;p&gt;This is a Payment Remiender for your {!$Record.Name} numbered order. please see the detail information below for your payment Method.&lt;/p&gt;&lt;p&gt;Order No: {!$Record.Name}&lt;/p&gt;&lt;p&gt;Order Amount: {!$Record.Total__c}&lt;/p&gt;&lt;p&gt;Payment Method: {!$Record.Payment_Method__c}&lt;/p&gt;&lt;p&gt;Link to Order:{!recordLinks}&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>cancelledProductionUpdate</name>
