@@ -9,17 +9,16 @@
 </lightning-button>
 <div>
     <lightning-combobox
-    name="progress"
+    name="Parent_Category"
     label="Parent Category"
     value={selectedParentCategory}
     placeholder="Select Parent Category"
     options={parentCategories}
-    onchange={handleParentCategoryChange} >
+    onchange={handleParentCategoryChange}
+     >
 </lightning-combobox>
-<p>{selectedParentCategory}</p>
 <template if:true={subCat1}>
- 
-  <lightning-combobox
+ <lightning-combobox
   name="progress"
   label="Sub Category1"
   value={selectedsubCategory2}
@@ -27,25 +26,18 @@
   options={subCategories1}
   onchange={handleSubCategory1Change} >
 </lightning-combobox>
-
-
 </template>
 <template if:true={subCat2}>
- 
-  <lightning-combobox
+ <lightning-combobox
   name="progress"
-  label="Sub Category1"
+  label="Sub Category2"
   value={selectedsubCategory2}
   placeholder="Select Sub Category"
   options={subCategories2}
-  onchange={handleSubCategory1Change} >
+  onchange={handleSubCategory2Change}>
 </lightning-combobox>
-
-
 </template>
-
-</div> 
-
+</div>
+<p >{selectedCategory}</p>
   </lightning-card>
-    
 </template>
