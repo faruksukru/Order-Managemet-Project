@@ -1,5 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getAllCategoriesLocal from '@salesforce/apex/ProductCategoriesController.getAllCategories';
+import getAllProducts from '@salesforce/apex/ProductCategoriesController.getAllProduct';
 
 export default class ProductCategories extends LightningElement {
     @track allCategories=[];
