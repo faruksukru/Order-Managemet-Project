@@ -1,25 +1,24 @@
 <template>
   <lightning-card title="Select Category">
-    <lightning-button variant="neutral" 
-    label="Search Product" 
-    title="Search Product" 
-    icon-name="utility:search"
-    onclick={handleFilterClick} 
-    class="slds-var-m-left_small">
-</lightning-button>
-<div>
+   
+<div class="combobox-container">
+  
     <lightning-combobox
+    class="combo-box"
     name="Parent_Category"
     label="Parent Category"
     value={selectedParentCategory}
     placeholder="Select Parent Category"
     options={parentCategories}
     onchange={handleParentCategoryChange}
-     >
+        >
 </lightning-combobox>
+
+
 <template if:true={subCat1}>
  <lightning-combobox
-  name="progress"
+ class="combo-box" 
+ name="progress"
   label="Sub Category1"
   value={selectedsubCategory2}
   placeholder="Select Sub Category"
@@ -27,8 +26,11 @@
   onchange={handleSubCategory1Change} >
 </lightning-combobox>
 </template>
+
+
 <template if:true={subCat2}>
  <lightning-combobox
+ class="combo-box"
   name="progress"
   label="Sub Category2"
   value={selectedsubCategory2}
@@ -37,9 +39,17 @@
   onchange={handleSubCategory2Change}>
 </lightning-combobox>
 </template>
-</div>
-<p >{selectedCategory}</p>
 
+</div>
+<br>
+<lightning-button variant="neutral" 
+label="Search Product" 
+title="Search Product" 
+icon-name="utility:search"
+onclick={handleFilterClick} 
+class="slds-m-around_large">
+</lightning-button>
+<hr>
 <ul>
   <template for:each={allProduct.data} for:item="eachProduct">
                
@@ -52,6 +62,7 @@
       </template> 
   </template>
   </ul>
+
   
   </lightning-card>
 </template>
