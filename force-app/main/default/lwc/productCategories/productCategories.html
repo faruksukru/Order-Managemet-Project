@@ -1,11 +1,11 @@
 <template>
-  <lightning-card title="Filter Product">
-    <lightning-button variant="success" 
-    label="Filter" 
-    title="Filter" 
+  <lightning-card title="Select Category">
+    <lightning-button variant="neutral" 
+    label="Search Product" 
+    title="Search Product" 
     icon-name="utility:search"
     onclick={handleFilterClick} 
-    class="slds-m-left_x-small">
+    class="slds-var-m-left_small">
 </lightning-button>
 <div>
     <lightning-combobox
@@ -39,5 +39,19 @@
 </template>
 </div>
 <p >{selectedCategory}</p>
+
+<ul>
+  <template for:each={allProduct.data} for:item="eachProduct">
+               
+      <li key={eachProduct.id}>Product Name: {eachProduct.Name}| Amount: {eachProduct.RemainingQuantity__c}| </li>
+      <template for:each={eachProduct.Product_Imageses__r} for:item="eachImage">
+        <li key={eachImage.id}>ImageURL: {eachImage.URL__c}</li> 
+      </template>
+      <template for:each={eachProduct.PricebookEntries} for:item="eachPrice">
+        <li key={eachPrice.id}>UnitPrice: {eachPrice.UnitPrice}</li> 
+      </template> 
+  </template>
+  </ul>
+  
   </lightning-card>
 </template>
