@@ -1,42 +1,43 @@
 <template>
-  <lightning-card title="Select Category">
-   
+<lightning-card title="Select Category" icon-name="action:edit_groups">
+  <div style="background-color: rgb(246, 254, 254);">
+
 <div class="combobox-container">
-  
-    <lightning-combobox
-    class="combo-box"
-    name="Parent_Category"
-    label="Parent Category"
-    value={selectedParentCategory}
-    placeholder="Select Parent Category"
-    options={parentCategories}
-    onchange={handleParentCategoryChange}
-        >
+
+<lightning-combobox
+class="combo-box"
+name="Parent_Category"
+label="Parent Category"
+value={selectedParentCategory}
+placeholder="Select Parent Category"
+options={parentCategories}
+onchange={handleParentCategoryChange}
+>
 </lightning-combobox>
 
 
 <template if:true={subCat1}>
- <lightning-combobox
- class="combo-box" 
- name="progress"
-  label="Sub Category1"
-  value={selectedsubCategory2}
-  placeholder="Select Sub Category"
-  options={subCategories1}
-  onchange={handleSubCategory1Change} >
+<lightning-combobox
+class="combo-box" 
+name="progress"
+label="Sub Category1"
+value={selectedsubCategory2}
+placeholder="Select Sub Category"
+options={subCategories1}
+onchange={handleSubCategory1Change} >
 </lightning-combobox>
 </template>
 
 
 <template if:true={subCat2}>
- <lightning-combobox
- class="combo-box"
-  name="progress"
-  label="Sub Category2"
-  value={selectedsubCategory2}
-  placeholder="Select Sub Category"
-  options={subCategories2}
-  onchange={handleSubCategory2Change}>
+<lightning-combobox
+class="combo-box"
+name="progress"
+label="Sub Category2"
+value={selectedsubCategory2}
+placeholder="Select Sub Category"
+options={subCategories2}
+onchange={handleSubCategory2Change}>
 </lightning-combobox>
 </template>
 
@@ -51,18 +52,32 @@ class="slds-m-around_large">
 </lightning-button>
 <hr>
 <ul>
-  <template for:each={allProduct.data} for:item="eachProduct">
-               
-      <li key={eachProduct.id}>Product Name: {eachProduct.Name}| Amount: {eachProduct.RemainingQuantity__c}| </li>
-      <template for:each={eachProduct.Product_Imageses__r} for:item="eachImage">
-        <li key={eachImage.id}>ImageURL: {eachImage.URL__c}</li> 
-      </template>
-      <template for:each={eachProduct.PricebookEntries} for:item="eachPrice">
-        <li key={eachPrice.id}>UnitPrice: {eachPrice.UnitPrice}</li> 
-      </template> 
-  </template>
-  </ul>
+<template for:each={allProduct.data} for:item="eachProduct">
 
+<li key={eachProduct.id}>Product Name: {eachProduct.Name}| Amount: {eachProduct.RemainingQuantity__c}| </li>
+<template for:each={eachProduct.Product_Imageses__r} for:item="eachImage">
+<li key={eachImage.id}>ImageURL: {eachImage.URL__c}</li> 
+</template>
+<template for:each={eachProduct.PricebookEntries} for:item="eachPrice">
+<li key={eachPrice.id}>UnitPrice: {eachPrice.UnitPrice}</li> 
+</template> 
+</template>
+</ul>
+
+<lightning-layout multiple-rows="True" pull-to-boundary="small" class="salist_contanier">
+  <template if:true={allProduct.data}>
+  <template for:each={allProduct.data} for:item="eachProduct"> 
+  <lightning-layout-item key={eachProduct.id} size="4" padding="around-small" flexibility="no-flex">
+  <c-product-categories-child eachprod={eachProduct}></c-product-categories-child>
+  </lightning-layout-item>    
+  </template>
+  </template>
+  <template if:true={allProduct.error}>
+  <p>You have an error please check {allProduct.error}</p>    
+  </template>
+  </lightning-layout>
+</div>  
   
-  </lightning-card>
+
+</lightning-card>
 </template>
