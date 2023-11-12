@@ -1,5 +1,5 @@
 <template>
-<lightning-card title="Select Category" icon-name="action:edit_groups">
+<lightning-card title="Select Category" icon-name="action:filter">
   <div style="background-color: rgb(246, 254, 254);">
 
 <div class="combobox-container">
@@ -67,7 +67,7 @@ class="slds-m-around_large">
 <lightning-layout multiple-rows="True" pull-to-boundary="small" class="salist_contanier">
   <template if:true={allProduct.data}>
   <template for:each={allProduct.data} for:item="eachProduct"> 
-  <lightning-layout-item key={eachProduct.id} size="4" padding="around-small" flexibility="no-flex">
+  <lightning-layout-item key={eachProduct.id} size="4" padding="around-small" flexibility="no-flex" class="custom-border">
   <c-product-categories-child eachprod={eachProduct}></c-product-categories-child>
   </lightning-layout-item>    
   </template>
