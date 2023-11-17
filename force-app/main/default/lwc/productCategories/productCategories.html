@@ -1,9 +1,6 @@
 <template>
-<lightning-card title="Select Category" icon-name="action:filter">
-  <div style="background-color: rgb(246, 254, 254);">
-
+<lightning-card title="Select Category" icon-name="action:filter" >
 <div class="combobox-container">
-
 <lightning-combobox
 class="combo-box"
 name="Parent_Category"
@@ -11,11 +8,8 @@ label="Parent Category"
 value={selectedParentCategory}
 placeholder="Select Parent Category"
 options={parentCategories}
-onchange={handleParentCategoryChange}
->
+onchange={handleParentCategoryChange}>
 </lightning-combobox>
-
-
 <template if:true={subCat1}>
 <lightning-combobox
 class="combo-box" 
@@ -27,8 +21,6 @@ options={subCategories1}
 onchange={handleSubCategory1Change} >
 </lightning-combobox>
 </template>
-
-
 <template if:true={subCat2}>
 <lightning-combobox
 class="combo-box"
@@ -40,7 +32,6 @@ options={subCategories2}
 onchange={handleSubCategory2Change}>
 </lightning-combobox>
 </template>
-
 </div>
 <br>
 <lightning-button variant="neutral" 
@@ -50,34 +41,24 @@ icon-name="utility:search"
 onclick={handleFilterClick} 
 class="slds-m-around_large">
 </lightning-button>
-<hr>
-<ul>
-<template for:each={allProduct.data} for:item="eachProduct">
+</lightning-card>
 
-<li key={eachProduct.id}>Product Name: {eachProduct.Name}| Amount: {eachProduct.RemainingQuantity__c}| </li>
-<template for:each={eachProduct.Product_Imageses__r} for:item="eachImage">
-<li key={eachImage.id}>ImageURL: {eachImage.URL__c}</li> 
-</template>
-<template for:each={eachProduct.PricebookEntries} for:item="eachPrice">
-<li key={eachPrice.id}>UnitPrice: {eachPrice.UnitPrice}</li> 
-</template> 
-</template>
-</ul>
+<br>
 
-<lightning-layout multiple-rows="True" pull-to-boundary="small" class="salist_contanier">
+
+<lightning-layout multiple-rows="True" pull-to-boundary="small" >
   <template if:true={allProduct.data}>
   <template for:each={allProduct.data} for:item="eachProduct"> 
-  <lightning-layout-item key={eachProduct.id} size="4" padding="around-small" flexibility="no-flex" class="custom-border">
-  <c-product-categories-child eachprod={eachProduct}></c-product-categories-child>
-  </lightning-layout-item>    
-  </template>
+     <lightning-layout-item key={eachProduct.id} size="10" small-device-size="6" medium-device-size="4" large-device-size="4" >
+      <c-test-tile eachprod={eachProduct}></c-test-tile>
+   </lightning-layout-item>   
+   </template>
   </template>
   <template if:true={allProduct.error}>
   <p>You have an error please check {allProduct.error}</p>    
   </template>
   </lightning-layout>
-</div>  
-  
 
-</lightning-card>
+
+
 </template>
