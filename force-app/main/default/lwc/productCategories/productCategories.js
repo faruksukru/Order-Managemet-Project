@@ -1,7 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getAllCategoriesLocal from '@salesforce/apex/ProductCategoriesController.getAllCategories';
 import getAllProducts from '@salesforce/apex/ProductCategoriesController.getAllProduct';
-
 export default class ProductCategories extends LightningElement {
 @track allCategories=[];
 @track parentCategories=[];
@@ -16,6 +15,7 @@ export default class ProductCategories extends LightningElement {
 @api selectedSubCategory1;
 @api selectedSubCategory2; 
 @api selectedCategory =[];
+
 @wire(getAllCategoriesLocal)
 wiredData({error, data}){
 if(data){//check the condition
@@ -57,7 +57,6 @@ this.allCategories.forEach(elements => {
 if(elements.parentCategoryId==element){
 this.categoryIds.push (elements.value);
 }})});
-
 this.subCategories1 = options;
 this.selectedSubCategory1=null;
 this.selectedSubCategory2=null; 
@@ -82,6 +81,7 @@ handleSubCategory2Change(event) {
 // this.subCat2=true;
 this.selectedSubCategory2=event.detail.value;
 }
+
 handleFilterClick(){
 if(this.selectedSubCategory2!=null){
 this.catIds= this.selectedSubCategory2;
@@ -90,8 +90,5 @@ this.catIds= this.categoryIds;
 } else if(this.selectedSubCategory1==null && this.selectedSubCategory2==null) {
 this.catIds= this.categoryIds;
 }
-
-
-
 }          
 }

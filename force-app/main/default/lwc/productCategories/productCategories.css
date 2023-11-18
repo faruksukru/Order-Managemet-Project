@@ -1,20 +1,9 @@
 .combobox-container {
-    display: flex; /* Use flexbox to align elements horizontally */
+    display: flex;
     gap: 20px;
     padding: 10px;
 }
-
 .combo-box {
-    width: 350px; /* Set the width to your desired size (e.g., 150px) */
-    margin-right: 10px; /* Add spacing between ComboBoxes (adjust as needed) */
-}
-.custom-border {
-    border: 1px solid #464343;
-   margin:1% ;
-    
-}
-
-.c-container {
-    border: 1px solid #d8dde6;
-    
+    width: 350px; 
+    margin-right: 10px; 
 }

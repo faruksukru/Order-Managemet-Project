@@ -1,78 +1,48 @@
 <template>
-    <br>
-    <div class="product-tile-container"  onclick={handleProductClick}>
-  
-       <div style=" height: 200px; ">
-       <template for:each={eachprod.Product_Imageses__r} for:item="eachImage">
-        <img key={eachImage.id} src={eachImage.URL__c} style="height: 200px; weight: 200px;" class="product slds-align_absolute-center">
-        </template>
-    </div>
-        
-        <p style="text-transform: uppercase;text-align: center; font-size: 12pt ; height: 50px; "><strong>{eachprod.Name}</strong></p>
+<br>
+<div class="product-tile-container"  onclick={handleProductClick} style="cursor: pointer;">
 
-        <div style=" height: 15px; ">  
-        <template for:each={eachprod.PricebookEntries} for:item="eachPrice">
-            Price :
-            <lightning-formatted-number
-            key={eachPrice.id}
-            format-style="currency"
-            currency-code="USD"
-            value={eachPrice.UnitPrice}
-            class="price slds-text-align_left"
-            maximum-fraction-digits="0"
-        ></lightning-formatted-number>   
-               </template>
-    </div>
-        <template lwc:if={isInStock}>
-           
-                <p style="color:green;text-align: center;font-size: 15pt;"><strong>In Stock</strong></p>
-
-                <div class="quantity-container slds-form-element slds-text-align_center">
-                    <label class="slds-form-element__label slds-m-right_none" for="example-centered">Quantity</label>
-                        <div class="slds-form-element__control">
-                        <lightning-button-icon onclick={handleDecrement} class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement" icon-name="utility:dash"  alternative-text="Decrease" title="Settings"></lightning-button-icon>
-                        <input type="number" id="example-centered" value={quantity} onchange={handleQuantityChange} class="slds-input slds-input_counter" />
-                        <lightning-button-icon onclick={handleIncrement} class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment" icon-name="utility:add"  alternative-text="Increase" title="Settings"></lightning-button-icon>
-                    </div>
-                    </div> 
-
-                <div class="combobox-container">
-                <lightning-button-icon
-                class="container"
-                    icon-name="utility:add"
-                    alternative-text="Increment"
-                    onclick={handleIncrement}
-                ></lightning-button-icon>
-                <lightning-input
-                class="container"
-                    type="number"
-                    label="Quantity"
-                    value={quantity}
-                    onchange={handleQuantityChange}
-                ></lightning-input>
-                <lightning-button-icon
-                class="container"
-                    icon-name="utility:dash"
-                    alternative-text="Decrement"
-                    onclick={handleDecrement}
-                ></lightning-button-icon>
-            </div>
-                <lightning-button variant="brand" label="Add To Cart" title="Add To Cart" icon-name="utility:cart" 
-                onclick={handleClick} class="slds-align_absolute-center"></lightning-button>
-                <p style="text-align: center;" title="Amount">Amount: {remaningQuantity}</p>
-             
-            </div>
-        </template>
-        <template lwc:else>
-            <p style="color:red;text-align: center;font-size: 20pt;"><strong>Out of Stock</strong></p>
-        </template>
-    
-   
+<div style=" height: 200px; ">
+<template for:each={eachprod.Product_Imageses__r} for:item="eachImage">
+<img key={eachImage.id} src={eachImage.URL__c} style="height: 200px; weight: 200px;" class="product slds-align_absolute-center">
+</template>
 </div>
-  
-    
 
+<p style="text-transform: uppercase;text-align: center; font-size: 11pt ; height: 60px; "><strong>{eachprod.Name}</strong></p>
 
-   
-    </template>
-    
+<div style=" height: 20px;">  
+<template for:each={eachprod.PricebookEntries} for:item="eachPrice">
+<p key={eachPrice.id} style="font-size: 12pt "><strong>Price :</strong>
+<lightning-formatted-number
+key={eachPrice.id}
+format-style="currency"
+currency-code="USD"
+value={eachPrice.UnitPrice}
+class="price slds-text-align_left"
+maximum-fraction-digits="0"
+></lightning-formatted-number>   
+</p>
+</template>
+</div>
+
+<template lwc:if={isInStock}>
+<p style="color:green;text-align: center;font-size: 15pt;"><strong>In Stock</strong></p>
+<div class="quantity-container slds-form-element slds-text-align_center">
+<label class="slds-form-element__label slds-m-right_none" for="example-centered">Quantity</label>
+<div class="slds-form-element__control">
+<lightning-button-icon onclick={handleIncrement} class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment" icon-name="utility:add"  alternative-text="Increase" title="Settings"></lightning-button-icon>
+<input type="number" id="example-centered" value={quantity} onchange={handleQuantityChange} class="slds-input slds-input_counter" />
+<lightning-button-icon onclick={handleDecrement} class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement" icon-name="utility:dash"  alternative-text="Decrease" title="Settings"></lightning-button-icon>
+</div>
+</div>
+<br>
+<lightning-button variant="brand" label="Add To Cart" title="Add To Cart" icon-name="utility:cart" icon-position="right"
+onclick={handleClick} class="slds-align_absolute-center"></lightning-button>
+<p style="text-align: center;" title="Amount">Amount: {remaningQuantity}</p>
+</template>
+<template lwc:else>
+<p style="color:red;text-align: center;font-size: 20pt;"><strong>Out of Stock</strong></p>
+</template>
+
+</div>
+</template>
