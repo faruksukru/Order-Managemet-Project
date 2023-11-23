@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Product Details">
+        <div if:true={product} class="slds-p-around_medium">
+            <p>
+                <b>Name:</b> {product.Name}<br />
+                <b>Description:</b> {product.Description}<br />
+                <b>Id:</b> {recordId}<br />
+                
+                <!-- Add other fields as needed -->
+            </p>
+        </div>
+        <template if:false={product}>
+            <div class="slds-p-around_medium">
+                No product details available.
+            </div>
+        </template>
+    </lightning-card>
+</template>

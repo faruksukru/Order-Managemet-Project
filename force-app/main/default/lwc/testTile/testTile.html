@@ -1,14 +1,18 @@
 <template>
 <br>
-<div class="product-tile-container"  onclick={handleProductClick} style="cursor: pointer;">
+<div class="product-tile-container">
 
 <div style=" height: 200px; ">
 <template for:each={eachprod.Product_Imageses__r} for:item="eachImage">
-<img key={eachImage.id} src={eachImage.URL__c} style="height: 200px; weight: 200px;" class="product slds-align_absolute-center">
+    
+    <img key={eachImage.Id} src={eachImage.URL__c} style="height: 200px; weight: 200px;" class="product slds-align_absolute-center">
+
 </template>
 </div>
 
-<p style="text-transform: uppercase;text-align: center; font-size: 11pt ; height: 60px; "><strong>{eachprod.Name}</strong></p>
+<h1 style="text-transform: uppercase;text-align: center; font-size: 11pt ; height: 60px; ">
+    <a name={eachprod.Id} onclick={navigateToViewProduct}>{eachprod.Name}</a>   
+</h1>
 
 <div style=" height: 20px;">  
 <template for:each={eachprod.PricebookEntries} for:item="eachPrice">
