@@ -12,16 +12,14 @@
         <target>lightningCommunity__Theme_Layout</target>
     </targets>
     <targetConfigs>
-        <targetConfig targets="lightning__RecordPage">
-            <!-- Add the objects for which this component should be available on the record page -->
-            <objects>
-                <object>Product2</object>
-            </objects>
+        <targetConfig targets="lightningCommunity__Default">
+          <property
+            name="recordId"
+            type="String"
+            label="Record Id"
+            description="Automatically bind the page's record id to the component variable"
+            default="{!recordId}"
+          />
         </targetConfig>
-        
-            <targetConfig targets="lightningCommunity__Default">
-                <property name="name" type="String" default="Submit Case"></property>
-                <property name="description" type="String" default="Submit Case"></property>
-        </targetConfig>
-    </targetConfigs>
+      </targetConfigs>
 </LightningComponentBundle>

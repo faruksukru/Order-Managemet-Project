@@ -1,18 +1,70 @@
 <template>
-    <lightning-card title="Product Details">
-        <div if:true={product} class="slds-p-around_medium">
-            <p>
-                <b>Name:</b> {product.Name}<br />
-                <b>Description:</b> {product.Description}<br />
-                <b>Id:</b> {recordId}<br />
-                
-                <!-- Add other fields as needed -->
-            </p>
-        </div>
-        <template if:false={product}>
-            <div class="slds-p-around_medium">
-                No product details available.
-            </div>
-        </template>
-    </lightning-card>
+<lightning-card title="Product Details" icon-name="standart:panel_detail">
+<div class="slds-grid slds-wrap">
+
+<template if:true={eachProduct.data}>
+
+<div class="slds-size_2-of-4">
+<template for:each ={eachProduct.data} for:item="prod">
+<template for:each={prod.Product_Imageses__r} for:item="eachImage">
+<img key={eachImage.Id} src={eachImage.URL__c} style="height: 400px; weight: 400px;" class="product slds-align_absolute-center">
+</template>
+</template>
+</div>
+
+<div class="slds-size_2-of-4 slds-p-around_medium">
+<template for:each ={eachProduct.data} for:item="prod">    
+<div key={prod.Id}> 
+<h6 style="font-size: x-large; font-weight:bold; font-family:Arial, Helvetica, sans-serif; color:blue ">{prod.Name}</h6><br>
+<lightning-formatted-text style="font-family: Arial, Helvetica, sans-serif; font-size:medium; " value={prod.Description}></lightning-formatted-text><br><br>
+<h6 style="font-family: Arial, Helvetica, sans-serif;">Stock Status:{prod.Stock_Status__c}</h6><br>
+<template for:each={prod.PricebookEntries} for:item="eachPrice">
+<lightning-formatted-number
+key={eachPrice.id}
+format-style="currency"
+currency-code="USD"
+value={eachPrice.UnitPrice}
+style="font-size: x-large; font-weight:bold; font-family:Arial, Helvetica, sans-serif; color:rgb(8, 84, 26)"
+maximum-fraction-digits="0"
+></lightning-formatted-number>   
+</template>  
+</div>
+
+<template lwc:if={isInStock}>
+    <p key={prod.Id} style="color:green;text-align: center;font-size: 15pt;"><strong>In Stock</strong></p>
+    <div key={prod.Id} class="quantity-container slds-form-element slds-text-align_center">
+    <label class="slds-form-element__label slds-m-right_none" for="example-centered">Quantity</label>
+    <div class="slds-form-element__control">
+    <lightning-button-icon onclick={handleIncrement} class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment" icon-name="utility:add"  alternative-text="Increase" title="Settings"></lightning-button-icon>
+    <input type="number" id="example-centered" value={quantity} onchange={handleQuantityChange} class="slds-input slds-input_counter" />
+    <lightning-button-icon onclick={handleDecrement} class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement" icon-name="utility:dash"  alternative-text="Decrease" title="Settings"></lightning-button-icon>
+    </div>
+    </div>
+    <br key={prod.Id}>
+    <lightning-button key={prod.Id} variant="brand" label="Add To Cart" title="Add To Cart" icon-name="utility:cart" icon-position="right"
+    onclick={handleClick} class="slds-align_absolute-center"></lightning-button>
+    <p key={prod.Id} style="text-align: center;" title="Amount">Amount: {remaningQuantity}</p>
+    </template>
+    <template lwc:else>
+    <p key={prod.Id} style="color:red;text-align: center;font-size: 20pt;"><strong>Out of Stock</strong></p>
+    </template>
+
+</template>
+
+
+
+
+</div>
+</template>
+
+<template if:true={product.error}>
+<div class="slds-p-around_medium">
+No product details available.
+</div>
+</template>
+
+
+
+</div>
+</lightning-card>
 </template>
