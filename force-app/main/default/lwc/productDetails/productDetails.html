@@ -1,60 +1,73 @@
 <template>
-<lightning-card title="Product Details" icon-name="standart:panel_detail">
+<lightning-card title="Product Details" icon-name="action:record">
 <div class="slds-grid slds-wrap">
 
 <template if:true={eachProduct.data}>
 
-<div class="slds-size_2-of-4">
-<template for:each ={eachProduct.data} for:item="prod">
+<div class="slds-size_2-of-3">
+<template for:each={eachProduct.data} for:item="prod">
+    <lightning-carousel  key={prod.Id} disable-auto-scroll>
 <template for:each={prod.Product_Imageses__r} for:item="eachImage">
-<img key={eachImage.Id} src={eachImage.URL__c} style="height: 400px; weight: 400px;" class="product slds-align_absolute-center">
+<lightning-carousel-image key={eachImage.Id} src={eachImage.URL__c} 
+></lightning-carousel-image>
 </template>
+</lightning-carousel>
 </template>
 </div>
 
-<div class="slds-size_2-of-4 slds-p-around_medium">
-<template for:each ={eachProduct.data} for:item="prod">    
-<div key={prod.Id}> 
-<h6 style="font-size: x-large; font-weight:bold; font-family:Arial, Helvetica, sans-serif; color:blue ">{prod.Name}</h6><br>
-<lightning-formatted-text style="font-family: Arial, Helvetica, sans-serif; font-size:medium; " value={prod.Description}></lightning-formatted-text><br><br>
-<h6 style="font-family: Arial, Helvetica, sans-serif;">Stock Status:{prod.Stock_Status__c}</h6><br>
+<div class="slds-size_1-of-3 slds-p-around_medium">
+<template for:each={eachProduct.data} for:item="prod">
+
+<div key={prod.Id}>
+<h6
+style="font-size: large; font-weight:bold; font-family:Arial, Helvetica, sans-serif; color:blue; text-align: left ">
+{prod.Name}</h6><br>
+
+<p style="height: 150px;">
+<lightning-formatted-text
+style="font-family: Arial, Helvetica, sans-serif; font-size:medium;"
+value={prod.Description}></lightning-formatted-text><br>
+</p>
+
+<template lwc:if={prod.Stock_Status__c}>
+<p style="color:green;text-align: center;font-size: 15pt;"><strong>In Stock</strong></p>
+
+<div style=" height: 25px;">
 <template for:each={prod.PricebookEntries} for:item="eachPrice">
-<lightning-formatted-number
-key={eachPrice.id}
-format-style="currency"
-currency-code="USD"
-value={eachPrice.UnitPrice}
-style="font-size: x-large; font-weight:bold; font-family:Arial, Helvetica, sans-serif; color:rgb(8, 84, 26)"
-maximum-fraction-digits="0"
-></lightning-formatted-number>   
-</template>  
+<p key={eachPrice.id} style="font-size: 12pt "><strong>Price :</strong>
+<lightning-formatted-number  format-style="currency" currency-code="USD"
+value={eachPrice.UnitPrice} class="price slds-text-align_left"
+maximum-fraction-digits="0"></lightning-formatted-number>
+</p>
+</template>
 </div>
 
-<template lwc:if={isInStock}>
-    <p key={prod.Id} style="color:green;text-align: center;font-size: 15pt;"><strong>In Stock</strong></p>
-    <div key={prod.Id} class="quantity-container slds-form-element slds-text-align_center">
-    <label class="slds-form-element__label slds-m-right_none" for="example-centered">Quantity</label>
-    <div class="slds-form-element__control">
-    <lightning-button-icon onclick={handleIncrement} class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment" icon-name="utility:add"  alternative-text="Increase" title="Settings"></lightning-button-icon>
-    <input type="number" id="example-centered" value={quantity} onchange={handleQuantityChange} class="slds-input slds-input_counter" />
-    <lightning-button-icon onclick={handleDecrement} class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement" icon-name="utility:dash"  alternative-text="Decrease" title="Settings"></lightning-button-icon>
-    </div>
-    </div>
-    <br key={prod.Id}>
-    <lightning-button key={prod.Id} variant="brand" label="Add To Cart" title="Add To Cart" icon-name="utility:cart" icon-position="right"
-    onclick={handleClick} class="slds-align_absolute-center"></lightning-button>
-    <p key={prod.Id} style="text-align: center;" title="Amount">Amount: {remaningQuantity}</p>
-    </template>
-    <template lwc:else>
-    <p key={prod.Id} style="color:red;text-align: center;font-size: 20pt;"><strong>Out of Stock</strong></p>
-    </template>
+<div class="slds-form-element slds-text-align_center">
+<label class="slds-form-element__label slds-m-right_none" for="example-centered">Quantity</label>
+<div class="slds-form-element__control">
+<lightning-button-icon onclick={handleIncrement}
+class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment"
+icon-name="utility:add" alternative-text="Increase" title="Settings"></lightning-button-icon>
+<input type="number" id="example-centered" value={quantity} onchange={handleQuantityChange}
+class="slds-input slds-input_counter" />
+<lightning-button-icon onclick={handleDecrement}
+class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement"
+icon-name="utility:dash" alternative-text="Decrease" title="Settings"></lightning-button-icon>
+</div>
+</div><br>
+
+<lightning-button variant="brand" label="Add To Cart" title="Add To Cart" icon-name="utility:cart"
+icon-position="right" onclick={handleClick} class="slds-align_absolute-center"></lightning-button>
 
 </template>
-
-
-
-
+<template lwc:else>
+<p style="color:red;text-align: center;font-size: 20pt;"><strong>Out of Stock</strong></p>
+</template>
 </div>
+
+</template>
+</div>
+
 </template>
 
 <template if:true={product.error}>
@@ -63,8 +76,26 @@ No product details available.
 </div>
 </template>
 
-
-
 </div>
 </lightning-card>
+
+<lightning-card title="Similar Products" icon-name="action:add_file">
+    <lightning-layout multiple-rows="True" pull-to-boundary="small">
+        <template if:true={similarProducts.data}>
+            <template for:each={similarProducts.data} for:item="eachProduct">
+                <lightning-layout-item key={eachProduct.id} size="4" padding=" horizontal-small">
+                    <c-test-tile eachprod={eachProduct}></c-test-tile>
+                </lightning-layout-item>
+            </template>
+        </template>
+        <template if:true={similarProducts.error}>
+            <p>You have an error please check {similarProducts.error}</p>
+        </template>
+    </lightning-layout>
+
+
+
+
+
+</lightning-card> 
 </template>

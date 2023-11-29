@@ -1,0 +1,46 @@
+.product-tile-container {
+    background-color: white;
+    border-radius: 0.50rem;
+    border: 1px solid lightgray;
+    height: 450px;
+    padding: 10px;
+}
+
+
+.product-desc-container{
+    margin-top: 10%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+   }
+.container {
+    display: inline-block;
+    align-items:flex-end;
+    padding: 10px; 
+ }
+lightning-formatted-number.price{
+    text-align: left;
+    font-size: large;
+    font-weight: 700;
+    color: rgb(6, 4, 144);
+}
+.combobox-container {
+    display: flex; 
+    gap: 20px;
+    padding: 10px;
+}
+.slds-input_counter {
+    max-width: 50%;
+    min-width: 30%;
+}
+
+
+:host {
+    display: block;
+}
+
+/* Set the width and height of the lightning-carousel-image */
+lightning-carousel-image {
+    width: 100%; /* Set the width as needed */
+    height: 100%; /* Maintain the aspect ratio */
+}
+

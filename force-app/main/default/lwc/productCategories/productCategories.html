@@ -1,62 +1,41 @@
 <template>
 
-<lightning-card title="Select Category" icon-name="action:filter" >
-<div class="combobox-container">
-<lightning-combobox
-class="combo-box"
-name="Parent_Category"
-label="Parent Category"
-value={selectedParentCategory}
-placeholder="Select Parent Category"
-options={parentCategories}
-onchange={handleParentCategoryChange}>
-</lightning-combobox>
-<template if:true={subCat1}>
-<lightning-combobox
-class="combo-box" 
-name="progress"
-label="Sub Category1"
-value={selectedsubCategory2}
-placeholder="Select Sub Category"
-options={subCategories1}
-onchange={handleSubCategory1Change} >
-</lightning-combobox>
-</template>
-<template if:true={subCat2}>
-<lightning-combobox
-class="combo-box"
-name="progress"
-label="Sub Category2"
-value={selectedsubCategory2}
-placeholder="Select Sub Category"
-options={subCategories2}
-onchange={handleSubCategory2Change}>
-</lightning-combobox>
-</template>
-</div>
-<br>
-<lightning-button variant="neutral" 
-label="Search Product" 
-title="Search Product" 
-icon-name="utility:search"
-onclick={handleFilterClick} 
-class="slds-m-around_large">
-</lightning-button>
-</lightning-card>
+    <lightning-card title="Select Category" icon-name="action:filter">
+        <div class="combobox-container">
+            <lightning-combobox class="combo-box" name="Parent_Category" label="Parent Category"
+                value={selectedParentCategory} placeholder="Select Parent Category" options={parentCategories}
+                onchange={handleParentCategoryChange}>
+            </lightning-combobox>
+            <template if:true={subCat1}>
+                <lightning-combobox class="combo-box" name="progress" label="Sub Category1" value={selectedsubCategory2}
+                    placeholder="Select Sub Category" options={subCategories1} onchange={handleSubCategory1Change}>
+                </lightning-combobox>
+            </template>
+            <template if:true={subCat2}>
+                <lightning-combobox class="combo-box" name="progress" label="Sub Category2" value={selectedsubCategory2}
+                    placeholder="Select Sub Category" options={subCategories2} onchange={handleSubCategory2Change}>
+                </lightning-combobox>
+            </template>
+        </div>
+        <br>
+        <lightning-button variant="neutral" label="Search Product" title="Search Product" icon-name="utility:search"
+            onclick={handleFilterClick} class="slds-m-around_large">
+        </lightning-button>
+    </lightning-card>
 
-<br>
+    <br>
 
-<lightning-layout multiple-rows="True" pull-to-boundary="small" >
-<template if:true={allProduct.data}>
-<template for:each={allProduct.data} for:item="eachProduct"> 
-<lightning-layout-item key={eachProduct.id} size="4" padding=" horizontal-small" >
-<c-test-tile eachprod={eachProduct}></c-test-tile>
-</lightning-layout-item>   
-</template>
-</template>
-<template if:true={allProduct.error}>
-<p>You have an error please check {allProduct.error}</p>    
-</template>
-</lightning-layout>
+    <lightning-layout multiple-rows="True" pull-to-boundary="small">
+        <template if:true={allProduct.data}>
+            <template for:each={allProduct.data} for:item="eachProduct">
+                <lightning-layout-item key={eachProduct.id} size="4" padding=" horizontal-small">
+                    <c-test-tile eachprod={eachProduct}></c-test-tile>
+                </lightning-layout-item>
+            </template>
+        </template>
+        <template if:true={allProduct.error}>
+            <p>You have an error please check {allProduct.error}</p>
+        </template>
+    </lightning-layout>
 
 </template>

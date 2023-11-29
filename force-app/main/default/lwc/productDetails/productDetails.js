@@ -1,6 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getProductRecord from '@salesforce/apex/ProductDetailsController.getProductDetails';
-
+import getSimilarProducts from '@salesforce/apex/ProductDetailsController.getSimilarProduct';
 export default class ProductDetails extends LightningElement {
     @api recordId;
     @track product=[];
@@ -10,14 +10,8 @@ export default class ProductDetails extends LightningElement {
     @api remaningQuantity;
     
   @wire(getProductRecord, { productId: '$recordId'}) eachProduct;
- @api
-  get isInStock(){
-   this.remaningQuantity=this.prod.RemainingQuantity__c;
-    if(this.remaningQuantity>0){
-    this.inStock=true;
-    } 
-    return  this.inStock;
-    }
+  @wire(getSimilarProducts, { productId: '$recordId'}) similarProducts;
+  
     
     handleIncrement() {
     this.quantity++;
@@ -35,6 +29,5 @@ export default class ProductDetails extends LightningElement {
     //this.remaningQuantity=event.detail.value;
     this.remaningQuantity = this.remaningQuantity- parseInt(event.target.value);
     }
-    
-  
+   
 }
