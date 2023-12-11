@@ -4,7 +4,7 @@
 
 <template if:true={eachProduct.data}>
 
-<div class="slds-size_2-of-3">
+<div class="slds-size_1-of-2">
 <template for:each={eachProduct.data} for:item="prod">
     <lightning-carousel  key={prod.Id} disable-auto-scroll>
 <template for:each={prod.Product_Imageses__r} for:item="eachImage">
@@ -15,7 +15,7 @@
 </template>
 </div>
 
-<div class="slds-size_1-of-3 slds-p-around_medium">
+<div class="slds-size_1-of-2 slds-p-around_medium">
 <template for:each={eachProduct.data} for:item="prod">
 
 <div key={prod.Id}>

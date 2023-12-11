@@ -1,6 +1,7 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getProductRecord from '@salesforce/apex/ProductDetailsController.getProductDetails';
 import getSimilarProducts from '@salesforce/apex/ProductDetailsController.getSimilarProduct';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class ProductDetails extends LightningElement {
     @api recordId;
     @track product=[];
@@ -29,5 +30,12 @@ export default class ProductDetails extends LightningElement {
     //this.remaningQuantity=event.detail.value;
     this.remaningQuantity = this.remaningQuantity- parseInt(event.target.value);
     }
-   
+    handleClick(event){
+      const toastEvent = new ShowToastEvent({
+        title: "Nice!",
+        message: "Item Has Been Added to Cart",
+        variant: "success"
+        });
+        this.dispatchEvent(toastEvent);
+          }
 }

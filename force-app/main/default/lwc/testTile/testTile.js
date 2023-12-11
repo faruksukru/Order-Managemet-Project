@@ -1,5 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import {NavigationMixin} from 'lightning/navigation'; 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class testTile extends NavigationMixin(LightningElement) {
 @api eachprod;
 @api inStock=false;
@@ -44,5 +45,22 @@ handleQuantityChange(event) {
 //this.remaningQuantity=event.detail.value;
 this.remaningQuantity = this.remaningQuantity- parseInt(event.target.value);
 }
-
+handleClick(event){
+    if(this.eachprod.RemainingQuantity__c<this.quantity){
+        const toastEvent = new ShowToastEvent({
+            title: "Oops",
+            message: "Quantity You Want to Add Exceed Our Inventory. You Can Add Maximum "+this.eachprod.RemainingQuantity__c+" for This Item",
+            variant: "Error"
+            });
+            this.dispatchEvent(toastEvent);
+    } else {
+    const toastEvent = new ShowToastEvent({
+      title: "Nice!",
+      message: "Item Has Been Added to Cart",
+      variant: "success"
+      });
+      this.dispatchEvent(toastEvent);
+    }
+  
+}
 }

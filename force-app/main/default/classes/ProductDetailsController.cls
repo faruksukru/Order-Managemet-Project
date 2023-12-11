@@ -7,8 +7,8 @@ FROM Product2 WHERE id =:productId];
 
 @AuraEnabled(cacheable=true)
 Public static List<Product2> getSimilarProduct(string productId){
-Product_Category__c category = [SELECT Category__c FROM Product_Category__c WHERE Product__c =:productId];
-List<Product_Category__c> similarProducts=[SELECT Product__c FROM Product_Category__c WHERE Category__c = :category.Category__c];
+Product_Category__c category = [SELECT Category__c, Parent_Category__c FROM Product_Category__c WHERE Product__c =:productId];
+List<Product_Category__c> similarProducts=[SELECT Product__c FROM Product_Category__c WHERE Parent_Category__c = :category.Parent_Category__c];
 Set<Id> similarProductIds = new Set<Id>();
 for (Product_Category__c eachProduct:similarProducts){
 similarProductIds.add(eachProduct.Product__c);
