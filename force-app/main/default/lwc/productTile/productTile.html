@@ -1,24 +1,30 @@
-<!-- sldsValidatorIgnore -->
+<!-- CHILD COMPONENT to SHOW EACH PRODUCT IN A DIVISION,CALLED FROM productCategories AND productDeatils -->
 <template>
 <br>
+<!-- Put product in a division -->
 <div class="product-tile-container">
 
+<!-- fix div in height to show hero image. Product object has hero checkbox, 
+if checked, shows this image -->
 <div style=" height: 200px; ">
+<!-- In query images comes in list sothat we use for:each -->
 <template for:each={eachprod.Product_Imageses__r} for:item="eachImage">
+<!-- looks hero image checked -->
 <template lwc:if={eachImage.Hero_Image__c}>
 <img key={eachImage.Id} src={eachImage.URL__c} style="height: 200px; weight: 200px;"
 class="product slds-align_absolute-center">
 </template>
 </template>
 </div>
-
+<!-- Fix in height to show product name with a tag, when calls navigationmix function to go to record page of the product -->
 <h1 style="text-transform: uppercase;text-align: center; font-size: 11pt ; height: 70px; ">
 <a name={eachprod.Id} onclick={navigateToViewProduct}>{eachprod.Name}</a>
 </h1>
-
+<!-- calls get function to check remaining quatity, if true, shows in stock, price, add quantity, and addto chart button, 
+if not lwc:else part works show only out of stock   -->
 <template lwc:if={isInStock}>
 <p style="color:green;text-align: center;font-size: 15pt;"><strong>In Stock</strong></p>
-
+<!-- fix div, shows price with formatted-number, style is currency. -->
 <div style=" height: 20px;">
 <template for:each={eachprod.PricebookEntries} for:item="eachPrice">
 <p key={eachPrice.id} style="font-size: 12pt "><strong>Price :</strong>
@@ -28,10 +34,12 @@ maximum-fraction-digits="0"></lightning-formatted-number>
 </p>
 </template>
 </div>
-
+<!-- Show quantity add input with -+ button -->
 <div class="quantity-container slds-form-element slds-text-align_center">
 <label class="slds-form-element__label slds-m-right_none" for="example-centered">Quantity</label>
 <div class="slds-form-element__control">
+<!-- button-icon is small button with on click. Here title shows name we mouse come on the button.
+we also have input shows quantity values changes with-+ button. Below part is a set you can use anywhere -->
 <lightning-button-icon onclick={handleIncrement}
 class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment"
 icon-name="utility:add" alternative-text="Increase" title="Settings"></lightning-button-icon>
@@ -41,13 +49,12 @@ class="slds-input slds-input_counter" />
 class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement"
 icon-name="utility:dash" alternative-text="Decrease" title="Settings"></lightning-button-icon>
 </div>
-</div>
-
-<br>
-
+</div><br>
+<!-- add to cart button with icon and onclick event. This event shows Toast messages. -->
 <lightning-button variant="brand" label="Add To Cart" title="Add To Cart" icon-name="utility:cart"
 icon-position="right" onclick={handleClick} class="slds-align_absolute-center"></lightning-button>
 </template>
+<!-- show only out of stock -->
 <template lwc:else>
 <p style="color:red;text-align: center;font-size: 20pt;"><strong>Out of Stock</strong></p>
 </template>

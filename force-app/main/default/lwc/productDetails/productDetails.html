@@ -1,12 +1,14 @@
 <template>
+
+<!-- Product Detail Card -->
 <lightning-card title="Product Details" icon-name="action:record">
 <div class="slds-grid slds-wrap">
-
+<!-- if query works fine and get data -->
 <template if:true={eachProduct.data}>
-
+<!-- Divide card in two pieces to show carousel image of product -->
 <div class="slds-size_1-of-2">
 <template for:each={eachProduct.data} for:item="prod">
-    <lightning-carousel  key={prod.Id} disable-auto-scroll>
+<lightning-carousel  key={prod.Id} disable-auto-scroll>
 <template for:each={prod.Product_Imageses__r} for:item="eachImage">
 <lightning-carousel-image key={eachImage.Id} src={eachImage.URL__c} 
 ></lightning-carousel-image>
@@ -14,88 +16,103 @@
 </lightning-carousel>
 </template>
 </div>
-
+<!-- Other division to show  Product information -->
 <div class="slds-size_1-of-2 slds-p-around_medium">
+<!-- For:Each to show Product information for each item, here we have only one item -->   
 <template for:each={eachProduct.data} for:item="prod">
-
+<!-- Product Name -->
 <div key={prod.Id}>
-<h6
-style="font-size: large; font-weight:bold; font-family:Arial, Helvetica, sans-serif; color:blue; text-align: left ">
-{prod.Name}</h6><br>
-
+<h6 style="font-size: large; font-weight:bold; font-family:Arial, Helvetica, 
+sans-serif; color:blue; text-align: left ">{prod.Name}</h6><br>
+<!-- Product Details -->
 <p style="height: 150px;">
 <lightning-formatted-text
 style="font-family: Arial, Helvetica, sans-serif; font-size:medium;"
 value={prod.Description}></lightning-formatted-text><br>
 </p>
-
+<!-- Product Stock Status, There is a checkbox in Product object to show stock status
+if checked lwc:if part works and show in stock, price, add quantity, and addto chart button, 
+if not lwc:else part works show only out of stock -->
 <template lwc:if={prod.Stock_Status__c}>
 <p style="color:green;text-align: center;font-size: 15pt;"><strong>In Stock</strong></p>
-
+<!-- Price with formatted-number, style is currency. -->
 <div style=" height: 25px;">
+<p style="font-size: 15pt "><strong>Price :</strong>
 <template for:each={prod.PricebookEntries} for:item="eachPrice">
-<p key={eachPrice.id} style="font-size: 12pt "><strong>Price :</strong>
-<lightning-formatted-number  format-style="currency" currency-code="USD"
+<lightning-formatted-number   key={eachPrice.id} format-style="currency" currency-code="USD"
 value={eachPrice.UnitPrice} class="price slds-text-align_left"
 maximum-fraction-digits="0"></lightning-formatted-number>
-</p>
 </template>
+</p>
 </div>
-
+<!-- Show quantity add input with -+ button -->
 <div class="slds-form-element slds-text-align_center">
 <label class="slds-form-element__label slds-m-right_none" for="example-centered">Quantity</label>
 <div class="slds-form-element__control">
+<!-- button-icon is small button with on click. Here title shows name we mouse come on the button.
+we also have input shows quantity values changes with-+ button. Below part is a set you can use anywhere -->
 <lightning-button-icon onclick={handleIncrement}
 class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment"
-icon-name="utility:add" alternative-text="Increase" title="Settings"></lightning-button-icon>
+icon-name="utility:add" alternative-text="Add" title="Add"></lightning-button-icon>
 <input type="number" id="example-centered" value={quantity} onchange={handleQuantityChange}
 class="slds-input slds-input_counter" />
 <lightning-button-icon onclick={handleDecrement}
 class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement"
-icon-name="utility:dash" alternative-text="Decrease" title="Settings"></lightning-button-icon>
+icon-name="utility:dash" alternative-text="Decrease" title="Decrease"></lightning-button-icon>
 </div>
 </div><br>
-
+<!-- add to cart button with icon and onclick event. This event shows Toast messages. -->
 <lightning-button variant="brand" label="Add To Cart" title="Add To Cart" icon-name="utility:cart"
-icon-position="right" onclick={handleClick} class="slds-align_absolute-center"></lightning-button>
-
+icon-position="right" onclick={handleClick} class="slds-align_absolute-center" value={prod.RemainingQuantity__c}></lightning-button>
 </template>
+<!-- show only out of stock -->
 <template lwc:else>
 <p style="color:red;text-align: center;font-size: 20pt;"><strong>Out of Stock</strong></p>
 </template>
 </div>
-
 </template>
 </div>
-
 </template>
-
+<!-- if query not work fine and get error. It shows error message -->
 <template if:true={product.error}>
 <div class="slds-p-around_medium">
-No product details available.
+<p style="color:red;text-align: center;font-size: 20pt;"><strong>No product details available !</strong></p>
 </div>
 </template>
-
 </div>
 </lightning-card>
+<!-- End of Product Detail Card  -->
 
+<!-- Similar Products Cards with Pagination  -->
 <lightning-card title="Similar Products" icon-name="action:add_file">
-    <lightning-layout multiple-rows="True" pull-to-boundary="small">
-        <template if:true={similarProducts.data}>
-            <template for:each={similarProducts.data} for:item="eachProduct">
-                <lightning-layout-item key={eachProduct.id} size="4" padding=" horizontal-small">
-                    <c-test-tile eachprod={eachProduct}></c-test-tile>
-                </lightning-layout-item>
-            </template>
-        </template>
-        <template if:true={similarProducts.error}>
-            <p>You have an error please check {similarProducts.error}</p>
-        </template>
-    </lightning-layout>
-
-
-
-
-
+<!-- Layout to show pervious, next button and call productTile component (child) to show three products next to each other in one page  -->
+<lightning-layout multiple-rows="True" pull-to-boundary="small">
+<!-- looks if there is any products. if yes, works  -->
+<template if:true={lengthVisible}>
+<!-- add each layout item. two of them is to show next and previous button, and in beetween them we have layout item 
+to call productTile component (child) to show three products next to each other in one page. 
+Here flexibility="grow" is used to add them one by one, size="3" show three products. Each button has onclick to go previous and next page -->
+<lightning-layout-item flexibility="grow">                
+<lightning-button-icon onclick={handleNext}
+class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment"
+icon-name="utility:right" alternative-text="Next Products" title="Next Products"></lightning-button-icon>
+</lightning-layout-item>
+<template for:each={visibleRecords} for:item="eachProduct">
+<lightning-layout-item key={eachProduct.id} size="3" padding=" horizontal-small" flexibility="grow" >
+<c-product-tile eachprod={eachProduct}></c-product-tile>
+</lightning-layout-item>
+</template>
+<lightning-layout-item flexibility="grow">
+<lightning-button-icon onclick={handlePrevious}
+class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement"
+icon-name="utility:left" alternative-text="Previous Products" title="Previous Products"></lightning-button-icon>
+</lightning-layout-item>
+</template>
+<!-- looks if there is any products. if false, show below error message  -->
+<template if:false={visibleRecords}>
+<p>You have an error please check {error}</p>
+</template>
+</lightning-layout>
 </lightning-card> 
+<!-- End of Similar Products Cards with Pagination  -->
 </template>
