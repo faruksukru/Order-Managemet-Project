@@ -1,30 +1,41 @@
+<!-- MAIN COMPONENT -->
 <template>
-
+<!-- Select Category Card -->
 <lightning-card title="Select Category" icon-name="action:filter">
+<!-- combobox-container to show each combo box dynamically first is show parent category
+Parent category is decided if it is no any parent category
+the other combox is working if they are under parent and sub categories. 
+The values are coming from category object. we have three categories under each other. -->    
 <div class="combobox-container">
+<!-- Parent Category combobox options shows parent categories -->
 <lightning-combobox class="combo-box" name="Parent_Category" label="Parent Category"
 value={selectedParentCategory} placeholder="Select Parent Category" options={parentCategories}
 onchange={handleParentCategoryChange}>
 </lightning-combobox>
+<!-- Sub category 1 combobox, looks if choosen parent category 
+have sub category, options shows parent categories -->
 <template if:true={subCat1}>
 <lightning-combobox class="combo-box" name="progress" label="Sub Category1" value={selectedsubCategory2}
 placeholder="Select Sub Category" options={subCategories1} onchange={handleSubCategory1Change}>
 </lightning-combobox>
 </template>
+<!-- Sub category 2 combobox, looks if choosen sub category 1 
+have sub category, options shows parent categories -->
 <template if:true={subCat2}>
 <lightning-combobox class="combo-box" name="progress" label="Sub Category2" value={selectedsubCategory2}
 placeholder="Select Sub Category" options={subCategories2} onchange={handleSubCategory2Change}>
 </lightning-combobox>
 </template>
-</div>
-<br>
+</div><br>
+<!-- Search button when clicked it founds products according to categories -->
 <lightning-button variant="neutral" label="Search Product" title="Search Product" icon-name="utility:search"
 onclick={handleFilterClick} class="slds-m-around_large">
 </lightning-button>
-</lightning-card>
+</lightning-card><br>
+<!-- End of Select Category Card -->
 
-<br>
-
+<!-- lightning-layout to call each product one by one to show on the UI in a division.
+each layout item calls productTile chil component to show product -->
 <lightning-layout multiple-rows="True" pull-to-boundary="small">
 <template if:true={allProduct.data}>
 <template for:each={allProduct.data} for:item="eachProduct">
@@ -33,6 +44,7 @@ onclick={handleFilterClick} class="slds-m-around_large">
 </lightning-layout-item>
 </template>
 </template>
+<!-- shows error if no data -->
 <template if:true={allProduct.error}>
 <p>You have an error please check {allProduct.error}</p>
 </template>

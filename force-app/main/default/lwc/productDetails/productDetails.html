@@ -23,9 +23,9 @@
 <!-- Product Name -->
 <div key={prod.Id}>
 <h6 style="font-size: large; font-weight:bold; font-family:Arial, Helvetica, 
-sans-serif; color:blue; text-align: left ">{prod.Name}</h6><br>
+sans-serif; color:blue; text-align: left ">{prod.Name}</h6><br><br><br>
 <!-- Product Details -->
-<p style="height: 150px;">
+<p style="height: 200px;">
 <lightning-formatted-text
 style="font-family: Arial, Helvetica, sans-serif; font-size:medium;"
 value={prod.Description}></lightning-formatted-text><br>
@@ -34,7 +34,7 @@ value={prod.Description}></lightning-formatted-text><br>
 if checked lwc:if part works and show in stock, price, add quantity, and addto chart button, 
 if not lwc:else part works show only out of stock -->
 <template lwc:if={prod.Stock_Status__c}>
-<p style="color:green;text-align: center;font-size: 15pt;"><strong>In Stock</strong></p>
+<p style="color:green;text-align: center;font-size: 15pt; height: 25px;"><strong>In Stock</strong></p><br><br>
 <!-- Price with formatted-number, style is currency. -->
 <div style=" height: 25px;">
 <p style="font-size: 15pt "><strong>Price :</strong>
@@ -44,7 +44,7 @@ value={eachPrice.UnitPrice} class="price slds-text-align_left"
 maximum-fraction-digits="0"></lightning-formatted-number>
 </template>
 </p>
-</div>
+</div><br><br>
 <!-- Show quantity add input with -+ button -->
 <div class="slds-form-element slds-text-align_center">
 <label class="slds-form-element__label slds-m-right_none" for="example-centered">Quantity</label>

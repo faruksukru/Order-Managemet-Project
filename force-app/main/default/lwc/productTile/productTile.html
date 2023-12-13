@@ -26,13 +26,13 @@ if not lwc:else part works show only out of stock   -->
 <p style="color:green;text-align: center;font-size: 15pt;"><strong>In Stock</strong></p>
 <!-- fix div, shows price with formatted-number, style is currency. -->
 <div style=" height: 20px;">
+<p  style="font-size: 15pt "><strong>Price :</strong>
 <template for:each={eachprod.PricebookEntries} for:item="eachPrice">
-<p key={eachPrice.id} style="font-size: 12pt "><strong>Price :</strong>
-<lightning-formatted-number  format-style="currency" currency-code="USD"
+<lightning-formatted-number key={eachPrice.id} format-style="currency" currency-code="USD"
 value={eachPrice.UnitPrice} class="price slds-text-align_left"
 maximum-fraction-digits="0"></lightning-formatted-number>
-</p>
 </template>
+</p>
 </div>
 <!-- Show quantity add input with -+ button -->
 <div class="quantity-container slds-form-element slds-text-align_center">
