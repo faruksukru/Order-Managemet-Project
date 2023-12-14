@@ -1,0 +1,9 @@
+/* CSS file */
+.input-container {
+    display:inline ;
+    align-items:baseline ;
+}
+
+.input-container label {
+    margin-right: 18px; /* Adjust as needed for spacing between label and input */
+}

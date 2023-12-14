@@ -1,0 +1,42 @@
+<!-- newRecordForm.html -->
+<template>
+
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+            <label for="input1">First Name</label>
+            <lightning-input id="input1" type="text"></lightning-input>
+        </div>
+        <div class="slds-col">
+            <label for="input2">Last Name</label>
+            <lightning-input id="input2" type="text"></lightning-input>
+        </div>
+    </div>
+
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+            <label for="inputField" class="slds-form-element__label">Label</label>
+            <div class="slds-form-element__control">
+                <input id="inputField" type="text" class="slds-input" />
+            </div>
+        </div>
+    </div>
+
+    <div class="input-container">
+        <label for="inputField1">Label</label>
+        <input id="inputField1" type="text" />
+    </div>
+
+
+    <div>
+        <p>please fiil hte form and click save Button. Then upload your resume</p>
+        <!-- Other form fields for the new record -->
+        <lightning-input label="First Name" value={recordName} onchange={handleNameChange}></lightning-input>
+ <!-- Save button to create the new record -->
+ <lightning-button label="Save" onclick={handleSave}></lightning-button>
+        
+        <!-- File upload component -->
+        <c-file-upload-component record-id={newRecordId} onuploadfinished={handleFileUploadFinished}></c-file-upload-component>
+
+       
+    </div>
+</template>
