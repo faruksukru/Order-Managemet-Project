@@ -24,4 +24,14 @@ Return [SELECT id, Name, RemainingQuantity__c, (SELECT URL__c, Hero_Image__c FRO
 FROM Product2 WHERE id IN :similarProductIds];
 }
 
+@AuraEnabled(cacheable=false) 
+Public static void createCartItem(string productId, Integer quantity){
+    Cart_Item__c newCartItem = new Cart_Item__c();
+    newCartItem.Product__c=productId;
+    newCartItem.Quantity__c=quantity;
+    newCartItem.Cart__c='a09Do0000049mtTIAQ';
+   system.debug(newCartItem);
+    insert newCartItem;
+}
+
 }

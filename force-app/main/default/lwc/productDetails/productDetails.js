@@ -2,6 +2,8 @@ import { LightningElement, api, track, wire } from 'lwc';
 //call Apex class to get Product detail info and similar Products 
 import getProductRecord from '@salesforce/apex/ProductDetailsController.getProductDetails';
 import getSimilarProducts from '@salesforce/apex/ProductDetailsController.getSimilarProduct';
+//call Apex class to create cart item
+import createCartItems from '@salesforce/apex/ProductDetailsController.createCartItem';
 //import ShowToastEvent. This is standart, copy/paste
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class ProductDetails extends LightningElement {
@@ -70,22 +72,38 @@ handleQuantityChange(event) {
 this.remaningQuantity = this.remaningQuantity- parseInt(event.target.value);
 }
 
-//when clicked add to cart button, shows error or success toast message.below most part is standart, copy/paste.
+//when clicked add to cart button, calls imperative method and apex method to create cart item, and shows error or success toast message.
 handleClick(event){
-if(event.target.value<this.quantity){//looks quantity if more than inventory. if yes, gives error message
+if(event.target.value<this.quantity){//looks if chosen quantity more than inventory. 
+//to show error message if chosen quantity exceeds remaning quantity
 const toastEvent = new ShowToastEvent({
 title: "Oops",
 message: "Quantity You Want to Add Exceed Our Inventory. You Can Add Maximum "+event.target.value+" for This Item",
 variant: "Error"
 });
 this.dispatchEvent(toastEvent);
-} else {//looks quantity if more than inventory. if no, gives success message
-const toastEvent = new ShowToastEvent({
-title: "Nice!",
-message: "Item Has Been Added to Cart",
-variant: "success"
-});
-this.dispatchEvent(toastEvent);//This standart
+} else {//Else part if chosen quantity not more than inventory
+/* imperative method to call apex controller to create cart item. 
+send productid and quantity. HERE WE HAVE TO SENT USER CARTID*/
+createCartItems({productId: this.recordId, quantity: this.quantity})
+.then(result=>{
+    //if created show succes message
+    const toastEvent = new ShowToastEvent({
+        title: "Nice!",
+        message: "Item Has Been Added to Cart",
+        variant: "success"
+        });
+        this.dispatchEvent(toastEvent);//This standart
+    })
+    .catch(error=>{
+        //if not created show error message
+            const toastEvent = new ShowToastEvent({
+            title: "Oops!",
+            message: "Item Has not Been Added to Cart. Please Try Again ",
+            variant: "error"
+            });
+            this.dispatchEvent(toastEvent);//This standart
+    });
 }}
 
 }

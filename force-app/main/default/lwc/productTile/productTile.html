@@ -52,7 +52,7 @@ icon-name="utility:dash" alternative-text="Decrease" title="Settings"></lightnin
 </div><br>
 <!-- add to cart button with icon and onclick event. This event shows Toast messages. -->
 <lightning-button variant="brand" label="Add To Cart" title="Add To Cart" icon-name="utility:cart"
-icon-position="right" onclick={handleClick} class="slds-align_absolute-center"></lightning-button>
+icon-position="right" value={eachprod} onclick={handleClick} class="slds-align_absolute-center"></lightning-button>
 </template>
 <!-- show only out of stock -->
 <template lwc:else>

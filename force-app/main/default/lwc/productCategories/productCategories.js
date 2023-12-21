@@ -67,9 +67,11 @@ this.subCat1=true;//makes second combobox visible
 options.push({label: element.label, value: element.value, parentCategoryId:element.parentCategoryId});
 this.categoryId.push (element.value);
 }});
+console.log(JSON.stringify(this.categoryId));
 /*nested for each function. looks only categories which have same parent category selected in second combobox
 and add each id (value) in to array*/ 
 this.categoryId.forEach(element => {
+this.categoryIds.push (element);//add subcategory 1 ids, if we don't have any subcotegory 2 item under subcat 1. then it will get aslo this products.
 this.allCategories.forEach(elements => {
 if(elements.parentCategoryId==element){
 this.categoryIds.push (elements.value);//push all sub categories 2 ids
@@ -77,6 +79,7 @@ this.categoryIds.push (elements.value);//push all sub categories 2 ids
 this.subCategories1 = options;//assign all subcategory 1 shows in second combobox
 this.selectedSubCategory1=null;//clear selectedSubCategory1
 this.selectedSubCategory2=null; //clear selectedSubCategory2
+console.log(JSON.stringify(this.categoryIds));
 } 
 
 /*function calls from second combobox to get third combobox values
@@ -84,12 +87,14 @@ initially give false not to show combobox then add related category
 values and show third combobox with the sub category 2 values*/
 handleSubCategory1Change(event) {
 this.selectedSubCategory1=event.detail.value;
+console.log(JSON.stringify(this.selectedSubCategory1));
 let options = [];//used to add only sub category 2 in for each loop
 this.subCat2=false//initial value not to show third combobox
 this.categoryIds=[];//clear categoryIds array
 /*for each function. looks only categories which have same parent category selected in second combobox
 and add each category name, id and parentcategory id in to array with 
 the below keys (label, value, parentCategoryId ). Make also subCat2 true to show third combobox*/ 
+this.categoryIds.push (this.selectedSubCategory1);//add subcategory 1 id, if we don't have any subcotegory 2 item under subcat 1. then it will get aslo this products.
 this.allCategories.forEach(element => {
 if(element.parentCategoryId==this.selectedSubCategory1){
 this.subCat2=true;
