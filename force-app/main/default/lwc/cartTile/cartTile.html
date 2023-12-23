@@ -1,6 +1,16 @@
 <template>
     <lightning-card title="Cart">
-Test
+<template if:true={allCartItems}>
+<template for:each={allCartItems} for:item="cartItem">
+    <div key={cartItem.Id}>
+        Test
+   <p>{cartItem.Amount__c}</p>
+   <p>{cartItem.Quantity__c}</p>
+   <p>{cartItem.Quantity__c}</p>
+   <p>{cartItem.TotalAmount__c}</p>
+</div>
+</template>
+</template>
 
     </lightning-card>
     

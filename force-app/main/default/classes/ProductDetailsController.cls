@@ -34,4 +34,9 @@ Public static void createCartItem(string productId, Integer quantity){
     insert newCartItem;
 }
 
+@AuraEnabled(cacheable=true)
+Public static List<Cart_Item__c> getCardItems(string cartId){
+Return [SELECT id, Amount__c, Quantity__c, TotalAmount__c, Product__c FROM Cart_Item__c WHERE id =:cartId];
+}
+
 }
