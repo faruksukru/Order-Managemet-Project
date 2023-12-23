@@ -21,6 +21,13 @@ lightning-formatted-number.price{
     font-weight: 700;
     color: rgb(6, 4, 144);
 }
+
+lightning-formatted-number.price1{
+    text-align:center;
+    font-size: medium;
+    font-weight: 1000;
+    color: rgb(119, 98, 242);
+}
 .combobox-container {
     display: flex; 
     gap: 20px;

@@ -10,9 +10,11 @@ export default class ProductTile extends NavigationMixin(LightningElement) {
 @api eachprod;//product publically available comes from parent
 @api recordId;//recordId publically available comes from parent
 recId;
+cartId ='a09Do0000049mtTIAQ';
 inStock=false;//initial value to used in HTML if have any stock or not
 quantity=1;//used for Quantity increase or decrease to show on UI
 remaningQuantity;//keep remaining quantiy used in get function 
+isShowModal = false;//initial value not to show modal
 
 //Navigationmixin function to show product in detail page. below part is standart, copy/paste.
 navigateToViewProduct(event) {
@@ -26,6 +28,18 @@ objectApiName: 'Product2',
 actionName: 'view'
 }
 });}
+//Navigationmixin function to cart page. below part is standart, copy/paste.
+navigateToCart(event) {
+    //var recId = event.target.name;
+    //this.recId = event.target.name;
+    this[NavigationMixin.Navigate]({
+    type: 'standard__recordPage',
+    attributes: {
+    recordId: this.cartId,
+    objectApiName: 'Cart__c',
+    actionName: 'view'
+    }
+    });}
 
 // get function to decide instock or out of stock
 get isInStock(){
@@ -75,6 +89,7 @@ handleClick(event){
             variant: "success"
             });
             this.dispatchEvent(toastEvent);//This standart
+            this.isShowModal = true;//make modal visible
         })
         .catch(error=>{
             //if not created show error message
@@ -86,5 +101,10 @@ handleClick(event){
                 this.dispatchEvent(toastEvent);//This standart
         });
     }}
+//when click continue shopping close lightning modal
+    hideModalBox() {  
+        this.isShowModal = false;
+    }
+    
 
 }
