@@ -1,11 +1,13 @@
 <template>
     <lightning-card title="Cart">
+     {productId}   
 <template if:true={allCartItems}>
 <template for:each={allCartItems} for:item="cartItem">
+   
     <div key={cartItem.Id}>
-        Test
+    <img  src={cartItem.Product__r.Product_Image__c} style="height: 75px; weight: 75px;"> 
+   <p>{cartItem.Product__r.Name}</p>    
    <p>{cartItem.Amount__c}</p>
-   <p>{cartItem.Quantity__c}</p>
    <p>{cartItem.Quantity__c}</p>
    <p>{cartItem.TotalAmount__c}</p>
 </div>
