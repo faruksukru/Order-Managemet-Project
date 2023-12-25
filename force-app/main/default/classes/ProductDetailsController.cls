@@ -39,4 +39,9 @@ Public static List<Cart_Item__c> getCartItems(string cartId){
 Return [SELECT id, Amount__c, Quantity__c, TotalAmount__c, Product__r.Name, Product__r.Product_Image__c  FROM Cart_Item__c WHERE Cart__c =:cartId];
 }
 
+@AuraEnabled(cacheable=false) 
+Public static void deleteCartItem(string cartItemId){
+    Delete [SELECT id FROM Cart_Item__c WHERE id =:cartItemId];
+}
+
 }

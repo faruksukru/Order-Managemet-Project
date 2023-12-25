@@ -1,19 +1,125 @@
 <template>
-    <lightning-card title="Cart">
-     {productId}   
+    <div class="slds-grid slds-wrap">   
+        <div class="slds-size_3-of-4">
+    <lightning-card title="Cart Details" icon-name="utility:cart">
+ 
 <template if:true={allCartItems}>
+    <div class="slds-grid slds-wrap">
 <template for:each={allCartItems} for:item="cartItem">
+    <div key={cartItem.Id} class="slds-size_1-of-4">   
+     <img  src={cartItem.Product__r.Product_Image__c} style="height: 100px; weight: 100px;"> 
+    </div>
+   <div key={cartItem.Id} class="slds-size_3-of-4 slds-p-around_medium"> 
    
-    <div key={cartItem.Id}>
-    <img  src={cartItem.Product__r.Product_Image__c} style="height: 75px; weight: 75px;"> 
-   <p>{cartItem.Product__r.Name}</p>    
-   <p>{cartItem.Amount__c}</p>
-   <p>{cartItem.Quantity__c}</p>
-   <p>{cartItem.TotalAmount__c}</p>
+    <h6 style="font-size: medium; font-weight:bold; font-family:Arial, Helvetica, 
+sans-serif; color:black; text-align: left ">{cartItem.Product__r.Name}</h6>
+
+<lightning-formatted-number   format-style="currency" currency-code="USD"
+value={cartItem.Amount__c} class="price slds-text-align_left"
+maximum-fraction-digits="0"></lightning-formatted-number>
+
+<div class="slds-grid slds-wrap"> 
+    <div class="slds-size_1-of-3">
+<lightning-button-icon value={cartItem.Id} onclick={handleDelete} icon-name="utility:delete" alternative-text="Delete" title="Delete"></lightning-button-icon>
 </div>
-</template>
+<div class="slds-size_2-of-3">
+<div class="slds-form-element slds-text-align_center">
+    
+    <div class="slds-form-element__control">
+    <!-- button-icon is small button with on click. Here title shows name we mouse come on the button.
+    we also have input shows quantity values changes with-+ button. Below part is a set you can use anywhere -->
+    <lightning-button-icon onclick={handleIncrement} value={cartItem.Quantity__c}
+    class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment"
+    icon-name="utility:add" alternative-text="Add" title="Add"></lightning-button-icon>
+    <input type="number" id="example-centered" value={cartItem.Quantity__c} onchange={handleQuantityChange}
+    class="slds-input slds-input_counter" />
+    <lightning-button-icon onclick={handleDecrement} value={cartItem.Quantity__c}
+    class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement"
+    icon-name="utility:dash" alternative-text="Decrease" title="Decrease"></lightning-button-icon>
+      </div>
+
+    </div>
+</div>
+</div><br> 
+     <p style="font-size: 11pt "><strong>Sub Total:</strong>
+        <lightning-formatted-number  format-style="currency" currency-code="USD"
+value={cartItem.TotalAmount__c} class="price slds-text-align_left"
+maximum-fraction-digits="0"></lightning-formatted-number>
+   </p>
+   
+</div>
+
+<!-- modal start -->      
+<template if:true={isShowModal}>
+    <section key={cartItem.Id} role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+        </svg>
+        <span class="slds-assistive-text">Cancel and close</span>
+        </button>
+        <div class="slds-modal__header">
+        <h1 id="modal-heading-01" style="font-size:x-large ; font-weight:bold; font-family:Arial, Helvetica, 
+        sans-serif; color:rgb(223, 26, 217);"  class="slds-modal__title slds-hyphenate">Are You Sure to Delete!</h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            
+                
+                <img  src={cartItem.Product__r.Product_Image__c} style="height: 100px; weight: 100px;"
+                class="product slds-align_absolute-center">
+               <br>
+                  
+                    <h6 style="font-size:medium ; text-align: center; font-weight:bold; font-family:Arial, Helvetica, 
+                sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" >
+                    {cartItem.Product__r.Name} </h6> <br> 
+                     
+                    <h6 style="font-size:medium ; text-align: center; font-weight:bold; font-family:Arial, Helvetica, 
+                sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" >X
+                    {cartItem.Quantity__c} </h6> <br> 
+
+                    <div class="slds-align_absolute-center" >
+                        
+                        <lightning-formatted-number  format-style="currency" currency-code="USD"
+                        value={cartItem.TotalAmount__c} class="price"
+                        maximum-fraction-digits="0"></lightning-formatted-number>
+                        
+                    </div>
+        </div>
+
+        <div class="slds-modal__footer slds-modal__footer_directional">
+        <button class="slds-button slds-button_brand" onclick={hideModalBox}>Cancel</button>
+        <button class="slds-button slds-button_brand"  value={cartItem.Id} onclick={deleteCartItem}>Delete</button>
+         </div>
+        </div>
+        </section>
+        <div key={cartItem.Id} class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+<!-- modal end --> 
+
+
 </template>
 
-    </lightning-card>
+</div>
+</template>
+
+</lightning-card>
+</div>
+
+<div class="slds-size_1-of-4">
+<lightning-card title="Order Summary" icon-name="utility:cart">
+    <p  style="font-size: 15pt "><strong>Total Amount: </strong>
+        
+        <lightning-formatted-number format-style="currency" currency-code="USD"
+        value={totalAmount} class="price1 slds-text-align_left"
+        maximum-fraction-digits="0"></lightning-formatted-number>
+       
+        </p>
+</lightning-card>
+</div>
+
+</div> 
+
+
     
 </template>
