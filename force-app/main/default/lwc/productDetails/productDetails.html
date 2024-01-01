@@ -98,7 +98,7 @@ class="slds-button slds-button_icon slds-button_icon-small slds-input__button_in
 icon-name="utility:right" alternative-text="Next Products" title="Next Products"></lightning-button-icon>
 </lightning-layout-item>
 <template for:each={visibleRecords} for:item="eachProduct">
-<lightning-layout-item key={eachProduct.id} size="3" padding=" horizontal-small" flexibility="grow" >
+<lightning-layout-item key={eachProduct.id} size="12" small-device-size="6" medium-device-size="3" large-device-size="3" padding=" horizontal-small" flexibility="grow" >
 <c-product-tile eachprod={eachProduct}></c-product-tile>
 </lightning-layout-item>
 </template>

@@ -39,7 +39,7 @@ each layout item calls productTile chil component to show product -->
 <lightning-layout multiple-rows="True" pull-to-boundary="small">
 <template if:true={allProduct.data}>
 <template for:each={allProduct.data} for:item="eachProduct">
-<lightning-layout-item key={eachProduct.id} size="4" padding=" horizontal-small">
+<lightning-layout-item key={eachProduct.id} size="12" small-device-size="6" medium-device-size="4" large-device-size="4" padding=" horizontal-small">
 <c-product-tile eachprod={eachProduct}></c-product-tile>
 </lightning-layout-item>
 </template>

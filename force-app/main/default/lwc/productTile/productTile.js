@@ -73,7 +73,7 @@ handleClick(event){
     //to show error message if chosen quantity exceeds remaning quantity
     const toastEvent = new ShowToastEvent({
     title: "Oops",
-    message: "Quantity You Want to Add Exceed Our Inventory. You Can Add Maximum "+event.target.value+" for This Item",
+    message: "Quantity You Want to Add Exceed Our Inventory. You Can Add Maximum "+event.target.value.RemainingQuantity__c+" for This Item",
     variant: "Error"
     });
     this.dispatchEvent(toastEvent);
