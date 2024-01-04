@@ -44,4 +44,12 @@ Public static void deleteCartItem(string cartItemId){
     Delete [SELECT id FROM Cart_Item__c WHERE id =:cartItemId];
 }
 
+@AuraEnabled(cacheable=false) 
+Public static void changeQuantity(string cartItemId, Integer cartItemQuantity){
+    system.debug('id='+cartItemId+ 'quantity='+cartItemQuantity);
+    Cart_Item__c updcrtItem = [SELECT id, Quantity__c FROM Cart_Item__c WHERE id=:cartItemId]; 
+    updcrtItem.Quantity__c=cartItemQuantity;
+    update updcrtItem;
+}
+
 }
