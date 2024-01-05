@@ -56,3 +56,16 @@ lightning-carousel-image {
     height: auto; /* Maintain the aspect ratio */
 }
 
+lightning-formatted-number.price{
+    text-align: left;
+    font-size: large;
+    font-weight: 700;
+    color: rgb(6, 4, 144);
+}
+
+lightning-formatted-number.price1{
+    text-align:center;
+    font-size: medium;
+    font-weight: 1000;
+    color: rgb(119, 98, 242);
+}

@@ -1,10 +1,11 @@
 <template>
 <!-- Used grid to show Cart Details and Order Summary next to each other -->
 <div class="slds-grid slds-wrap">   
-
-<div class="slds-size_3-of-4">
+<div class="slds-size_5-of-8">
 <!-- Cart Details Card start.-->
-<lightning-card title="Cart Details" icon-name="utility:cart">
+<lightning-card title="Cart Details" icon-name="action:add_relationship">
+<lightning-spinner if:true={isLoaded} alternative-text="Loading..." variant="brand" size="medium">
+</lightning-spinner>
 <!-- look if we have cart items-->
 <template if:true={allCartItems}>
 <!-- Used grid to show Cart item details next to each other -->    
@@ -79,7 +80,7 @@ sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" 
 {deletedItem.Quantity__c} </h6> <br key={deletedItem.Id}> 
 <div  key={deletedItem.Id} class="slds-align_absolute-center" >
 <lightning-formatted-number  format-style="currency" currency-code="USD"
-value={deletedItem.TotalAmount__c} class="price"
+value={deletedItem.TotalAmount__c} class="price1"
 maximum-fraction-digits="0"></lightning-formatted-number>
 </div>
 </template>
@@ -101,15 +102,23 @@ maximum-fraction-digits="0"></lightning-formatted-number>
 <!-- Cart Details Card end.-->
 
 <!-- Order Summary Card start.-->
-<div class="slds-size_1-of-4">
-<lightning-card title="Order Summary" icon-name="utility:cart">
+<div class="slds-size_3-of-8">
+<lightning-card title="Order Summary" icon-name="custom:custom17">
 <p  style="font-size: 15pt "><strong>Total Amount: </strong>
 <!-- call getter to get total amount of cart-->
 <lightning-formatted-number format-style="currency" currency-code="USD"
 value={totalAmount} class="price1 slds-text-align_left"
 maximum-fraction-digits="0"></lightning-formatted-number>
 </p>
+<hr>
+
+<div class="slds-col slds-text-align_center">
+<lightning-button variant="brand" icon-name="utility:cart" icon-position="right" label="Continue Shopping" onclick={continueShopping}> </lightning-button>
+<lightning-button variant="success" icon-name="action:update" icon-position="right" label="Complete Shopping" class="slds-m-left_large" 
+onclick={completeShopping}></lightning-button>
+</div>
 </lightning-card>
+
 </div>
 <!-- Order Summary Card end.-->
 
