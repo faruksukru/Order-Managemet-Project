@@ -4,9 +4,11 @@ import getProductRecord from '@salesforce/apex/ProductDetailsController.getProdu
 import getSimilarProducts from '@salesforce/apex/ProductDetailsController.getSimilarProduct';
 //call Apex class to create cart item
 import createCartItems from '@salesforce/apex/ProductDetailsController.createCartItem';
+//import NavigationMixin. This is standart, copy/paste
+import {NavigationMixin} from 'lightning/navigation';
 //import ShowToastEvent. This is standart, copy/paste
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-export default class ProductDetails extends LightningElement {
+export default class ProductDetails extends NavigationMixin(LightningElement) {
 //Variables  
 @api recordId;// for publically used to store recordId of detail Product
 @track product=[];
@@ -17,6 +19,8 @@ totalRecords;//keep number of similar products
 recordSize=3;//assign 3 to show 3 products in one page, can be changed
 currentPage=1;//initial of the current page in pagination
 visibleRecords;//keep similar products to be showed in each pagination page
+isShowModal = false;//initial value not to show modal
+cartId ='a09Do0000049mtTIAQ';
 
 // wire with apex class with sending recordId and getting product details 
 @wire(getProductRecord, { productId: '$recordId'}) eachProduct;
@@ -31,6 +35,19 @@ this.passRecord();//call function to assign three products to visibleRecords sen
 }else if(error){//if we retrieve  data
 this.totalRecords=undefined;
 }};
+
+//Navigationmixin function to cart page. below part is standart, copy/paste.
+navigateToCart(event) {
+    //var recId = event.target.name;
+    //this.recId = event.target.name;
+    this[NavigationMixin.Navigate]({
+    type: 'standard__recordPage',
+    attributes: {
+    recordId: this.cartId,
+    objectApiName: 'Cart__c',
+    actionName: 'view'
+    }
+    });}
 
 //decrease by 1 currentpage value and call function to show previous three products
 handlePrevious(){
@@ -94,6 +111,7 @@ createCartItems({productId: this.recordId, quantity: this.quantity})
         variant: "success"
         });
         this.dispatchEvent(toastEvent);//This standart
+        this.isShowModal = true;//make modal visible
     })
     .catch(error=>{
         //if not created show error message
@@ -105,5 +123,9 @@ createCartItems({productId: this.recordId, quantity: this.quantity})
             this.dispatchEvent(toastEvent);//This standart
     });
 }}
+
+hideModalBox() {  
+    this.isShowModal = false;
+}
 
 }

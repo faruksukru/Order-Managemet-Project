@@ -61,58 +61,61 @@ icon-position="right" value={eachprod} onclick={handleClick} class="slds-align_a
 </div>
 <!-- modal start -->      
 <template if:true={isShowModal}>
-    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
-        <div class="slds-modal__container">
-        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
-        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-        </svg>
-        <span class="slds-assistive-text">Cancel and close</span>
-        </button>
-        <div class="slds-modal__header">
-        <h1 id="modal-heading-01" style="font-size:x-large ; font-weight:bold; font-family:Arial, Helvetica, 
-        sans-serif; color:rgb(223, 26, 217);"  class="slds-modal__title slds-hyphenate">The Product Is In Your Cart!</h1>
-        </div>
-        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-            <template for:each={eachprod.Product_Imageses__r} for:item="eachImage">
-                <!-- looks hero image checked -->
-                <template lwc:if={eachImage.Hero_Image__c}>
-                <img key={eachImage.Id} src={eachImage.URL__c} style="height: 100px; weight: 100px;"
-                class="product slds-align_absolute-center">
-                </template>
-                </template><br>
-                  
-                    <h6 style="font-size:medium ; text-align: center; font-weight:bold; font-family:Arial, Helvetica, 
-                sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" >
-                    {eachprod.Name} </h6> <br> 
-                     
-                    <h6 style="font-size:medium ; text-align: center; font-weight:bold; font-family:Arial, Helvetica, 
-                sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" >X
-                    {quantity} </h6> <br> 
-                    
-                    <div class="slds-align_absolute-center" >
-                        <template for:each={eachprod.PricebookEntries} for:item="eachPrice">
-                        <lightning-formatted-number key={eachPrice.id} format-style="currency" currency-code="USD"
-                        value={eachPrice.UnitPrice} class="price1"
-                        maximum-fraction-digits="0"></lightning-formatted-number>
-                        </template>
-                    </div>
-        </div>
+<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby={label} class="slds-modal slds-fade-in-open">
+<div class="slds-modal__container">
+<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+</svg>
+<span class="slds-assistive-text">Cancel and close</span>
+</button>
 
-        <div class="slds-modal__footer slds-modal__footer_directional">
-        <button class="slds-button slds-button_brand" onclick={hideModalBox}>Continue Shopping</button>
-        <button class="slds-button slds-button_brand" name={eachprod.Id} onclick={navigateToCart}>Go To Cart</button>
+<div class="slds-modal__header">
  
-        </div>
-        </div>
-        </section>
-        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-        </template>
+<h1 if:true={newItem} id="modal-heading-01" style="font-size:x-large ; font-weight:bold; font-family:Arial, Helvetica, 
+sans-serif; color:rgb(223, 26, 217);"  class="slds-modal__title slds-hyphenate">The Product Is In Your Cart!</h1>
+
+<h1 if:true={inCart} id="modal-heading-02" style="font-size:x-large ; font-weight:bold; font-family:Arial, Helvetica, 
+sans-serif; color:rgb(223, 26, 217);"  class="slds-modal__title slds-hyphenate">You have same item!</h1>
+</div>
+
+<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+<template for:each={eachprod.Product_Imageses__r} for:item="eachImage">
+<!-- looks hero image checked -->
+<template lwc:if={eachImage.Hero_Image__c}>
+<img key={eachImage.Id} src={eachImage.URL__c} style="height: 100px; weight: 100px;"
+class="product slds-align_absolute-center">
+</template>
+</template><br>
+
+<h6 style="font-size:medium ; text-align: center; font-weight:bold; font-family:Arial, Helvetica, 
+sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" >
+{eachprod.Name} </h6> <br> 
+
+<h6 style="font-size:medium ; text-align: center; font-weight:bold; font-family:Arial, Helvetica, 
+sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" >X
+{quantity} </h6> <br> 
+
+<div class="slds-align_absolute-center" >
+<template for:each={eachprod.PricebookEntries} for:item="eachPrice">
+<lightning-formatted-number key={eachPrice.id} format-style="currency" currency-code="USD"
+value={eachPrice.UnitPrice} class="price1"
+maximum-fraction-digits="0"></lightning-formatted-number>
+</template>
+</div>
+</div>
+<div class="slds-modal__footer slds-modal__footer_directional">
+<button class="slds-button slds-button_brand" onclick={hideModalBox}>Continue Shopping</button>
+<button class="slds-button slds-button_brand" name={eachprod.Id} onclick={navigateToCart}>Go To Cart</button>
+</div>
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>
 <!-- modal end --> 
 
 <template if:true={isGotoCart}>
-    <c-cart-tile></c-cart-tile>
-    
- </template>
+<c-cart-tile></c-cart-tile>
+</template>
 
 </template>

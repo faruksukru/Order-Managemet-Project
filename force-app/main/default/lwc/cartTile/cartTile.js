@@ -55,8 +55,18 @@ this.allProducts=undefined;
 
 //increase cart item quantity by 1, call apex to update quantity in cart item and refresh page
 handleIncrement(event) {
-this.quantity =event.target.name;
+this.quantity =event.target.name.Quantity__c;
 this.quantity++;
+console.log('remaining'+event.target.name.Product__r.RemainingQuantity__c)
+if(event.target.name.Product__r.RemainingQuantity__c<this.quantity){//looks if chosen quantity more than inventory. 
+//to show error message if chosen quantity exceeds remaning quantity
+const toastEvent = new ShowToastEvent({
+title: "Oops",
+message: "Quantity You Want to Add Exceed Our Inventory. You Can Add Maximum "+event.target.name.Product__r.RemainingQuantity__c+" for This Item",
+variant: "Error"
+});
+this.dispatchEvent(toastEvent);
+} else {
 this.isLoaded=!this.isLoaded;//this make spinner work 
 //call apex class to update cartitem sending cartitem id and new quantity
 changeQuantity({cartItemId: event.target.value, cartItemQuantity:this.quantity})
@@ -68,6 +78,7 @@ this.isLoaded=!this.isLoaded;//this make spinner unvisible
 .catch(error=>{
 alert('There is an Error')    
 });
+}
 }
 
 //decrease cart item quantity by 1, call apex to update quantity in cart item and refresh page
@@ -127,7 +138,7 @@ refreshApex(this.dataResult);//this call apex and refresh data
 this.isLoaded=!this.isLoaded;//this make spinner unvisible
 })
 .catch(error=>{
-    alert('There is an Error');
+alert('There is an Error');
 });
 }
 
@@ -136,9 +147,14 @@ get totalAmount(){
 this.cartTotalAmount=0;
 this.allCartItems.forEach(element => {
 this.cartTotalAmount+=element.TotalAmount__c;
-console.log('Amount'+this.cartTotalAmount);
 });
 return this.cartTotalAmount;
 }
+continueShopping(){
 
+}
+
+completeShopping(){
+
+}
 }

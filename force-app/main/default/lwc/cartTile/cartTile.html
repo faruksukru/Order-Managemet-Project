@@ -34,7 +34,7 @@ alternative-text="Delete" title="Delete"></lightning-button-icon>
 <div class="slds-form-element__control">
 <!-- button-icon is small button with on click. Here title shows name we mouse come on the button.
 we also have input shows quantity values changes with-+ button. Below part is a set you can use anywhere -->
-<lightning-button-icon onclick={handleIncrement} name={cartItem.Quantity__c} value={cartItem.Id}
+<lightning-button-icon onclick={handleIncrement} name={cartItem} value={cartItem.Id}
 class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment"
 icon-name="utility:add" alternative-text="Add" title="Add"></lightning-button-icon>
 <input type="number" id="example-centered" value={cartItem.Quantity__c} onchange={handleQuantityChange}
