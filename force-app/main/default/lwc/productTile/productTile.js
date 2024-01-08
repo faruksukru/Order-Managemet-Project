@@ -13,17 +13,18 @@ export default class ProductTile extends NavigationMixin(LightningElement) {
 //Variables
 @api eachprod;//product publically available comes from parent
 @api recordId;//recordId publically available comes from parent
-recId;
-cartId ='a09Do0000049mtTIAQ';
+recId;//assign product id to navigate product record detail
+cartId ='a09Do0000049mtTIAQ';//this is hard code, CHANGE WITH USER CART ID
 inStock=false;//initial value to used in HTML if have any stock or not
 quantity=1;//used for Quantity increase or decrease to show on UI
 remaningQuantity;//keep remaining quantiy used in get function 
 isShowModal = false;//initial value not to show modal
 sameItem=false;//initial value for sameItem check
+newItem=false;//used in modal in HTML to show only modal format if new item added to cart
+inCart=false;//used in modal in HTML to show only modal format if item has been added to cart
+@track label=null;//used in modal in HTML to show which heading is used in modal
+@track allCartItems=[];// keep all cartitems related with cart
 @track dataResult =[];//get the result of query
-newItem=false;
-inCart=false;
-@track label;
 
 //send cart id and get all related cart items and assign allCartItems array which used in HTML. This used to check if the added product in cart already.
 @wire(getcartItems, { cartId: '$cartId'}) 
@@ -31,17 +32,11 @@ cartItems(result){ // created a function, function name can be anything
 this.dataResult=result;
 if(result.data){ //if we retrieve  data
 this.allCartItems = result.data;//assign all similar products to totalRecords
-/* this parts gets realted product ids used in below wire, but NOT USED NOW, 
-because we get all needed info from cart item query.
-data.forEach(element => {
-this.productIds.push(element.Product__c);
-});*/
 console.log('Test2'+ JSON.stringify(this.allCartItems));
 }else if(result.error){//if we retrieve  data
 alert('There is an Error')
 this.allCartItems=undefined;
 }};
-
 //Navigationmixin function to show product in detail page. below part is standart, copy/paste.
 navigateToViewProduct(event) {
 //var recId = event.target.name;
@@ -95,16 +90,17 @@ this.remaningQuantity = this.remaningQuantity- parseInt(event.target.value);
 
 //when clicked add to cart button, calls imperative method and apex method to create cart item, and shows error or success toast message.
 handleClick(event){
-    //looks if add cart item is added before 
+    this.label=null;//initial value of modal aria-labelledby
+    //looks if cart item is added before 
     this.allCartItems.forEach(element => {
         if(element.Product__c == event.target.value.Id){
-            this.label='modal-heading-02';
+            this.label='modal-heading-02';//make modal aria-labelledby to show related heading
+            this.inCart=true;//to show related items in modal, if the item has been added before
+            this.newItem=false;//not to show other related items in modal
             this.sameItem=true;//make sameItem true not to continue below part
             this.isShowModal = true;//make modal visible
-        //alert('You have same item');//put realted cart item info into this array
-        }
-      });
-
+        }});
+//looks if it is not added before into cart
 if(!this.sameItem){
     if(event.target.value.RemainingQuantity__c<this.quantity){//looks if chosen quantity more than inventory. 
     //to show error message if chosen quantity exceeds remaning quantity
@@ -117,6 +113,9 @@ if(!this.sameItem){
     } else {//Else part if chosen quantity not more than inventory
     /* imperative method to call apex controller to create cart item. 
     send productid and quantity. HERE WE HAVE TO SENT USER CARTID*/
+    this.label='modal-heading-01';//make modal aria-labelledby to show related heading
+    this.newItem=true;//to show related items in modal, if the item is newly added
+    this.inCart=false;//not to show other related items in modal
     createCartItems({productId: this.eachprod.Id, quantity: this.quantity})
     .then(result=>{
         //if created show succes message
@@ -126,8 +125,6 @@ if(!this.sameItem){
             variant: "success"
             });
             this.dispatchEvent(toastEvent);//This standart
-            this.label='modal-heading-01';
-            this.newItem=true;
             this.isShowModal = true;//make modal visible
         })
         .catch(error=>{
@@ -139,12 +136,12 @@ if(!this.sameItem){
                 });
                 this.dispatchEvent(toastEvent);//This standart
         });
+        
     }}}
 //when click continue shopping close lightning modal
     hideModalBox() {  
         refreshApex(this.dataResult);//this call apex and refresh data
         this.isShowModal = false;
     }
-    
-
+//end of js 
 }

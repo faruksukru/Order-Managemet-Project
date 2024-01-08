@@ -63,7 +63,7 @@ icon-name="utility:dash" alternative-text="Decrease" title="Decrease"></lightnin
 </div><br>
 <!-- add to cart button with icon and onclick event. This event shows Toast messages. -->
 <lightning-button variant="brand" label="Add To Cart" title="Add To Cart" icon-name="utility:cart"
-icon-position="right" onclick={handleClick} class="slds-align_absolute-center" value={prod.RemainingQuantity__c}></lightning-button>
+icon-position="right" onclick={handleClick} class="slds-align_absolute-center" value={prod}></lightning-button>
 </template>
 <!-- show only out of stock -->
 <template lwc:else>
@@ -71,9 +71,11 @@ icon-position="right" onclick={handleClick} class="slds-align_absolute-center" v
 </template>
 </div>
 
-<!-- modal start -->      
+<!-- modal start. Here we show both two modal. One is for if we have same item in cart, the item is not added to cart, it shows a modal
+second is for new item, to show item has been added to cart and item info. Here we use conditional rendering. 
+newItem or inCart.Those values comes from js, we also get aria-labelledby from js. -->       
 <template if:true={isShowModal}>
-<section key={prod.Id} role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+<section key={prod.Id} role="dialog" tabindex="-1" aria-modal="true" aria-labelledby={label} class="slds-modal slds-fade-in-open">
 <div class="slds-modal__container">
 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
 <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
@@ -82,10 +84,15 @@ icon-position="right" onclick={handleClick} class="slds-align_absolute-center" v
 <span class="slds-assistive-text">Cancel and close</span>
 </button>
 <div class="slds-modal__header">
-<h1 id="modal-heading-01" style="font-size:x-large ; font-weight:bold; font-family:Arial, Helvetica, 
-sans-serif; color:rgb(223, 26, 217);"  class="slds-modal__title slds-hyphenate">The Product Is In Your Cart!</h1>
+<h1 if:true={newItem} id="modal-heading-01" style="font-size:x-large ; font-weight:bold; font-family:Arial, Helvetica, 
+sans-serif; color:rgb(223, 26, 217);"  class="slds-modal__title slds-hyphenate">The Item Is In Your Cart!</h1>
+<h1 if:true={inCart} id="modal-heading-02" style="font-size:x-large ; font-weight:bold; font-family:Arial, Helvetica, 
+sans-serif; color:rgb(223, 26, 62);" class="slds-modal__title slds-hyphenate">You Have The Same Item In Your Cart!</h1>
 </div>
+
 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+<h3 if:true={inCart} style=" text-align: center; font-size:medium ; font-family:Arial, Helvetica, sans-serif; color:rgb(22, 23, 22);"
+class="slds-modal__title slds-hyphenate">You Can Click <strong><u>Go to Cart</u></strong> and Increase Item Quantity, If You Want !</h3>      
 <template for:each={prod.Product_Imageses__r} for:item="eachImage">
 <!-- looks hero image checked -->
 <template lwc:if={eachImage.Hero_Image__c}>
@@ -97,17 +104,17 @@ class="product slds-align_absolute-center">
 <h6  style="font-size:medium ; text-align: center; font-weight:bold; font-family:Arial, Helvetica, 
 sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" >
 {prod.Name} </h6> <br> 
-    
-<h6 style="font-size:medium ; text-align: center; font-weight:bold; font-family:Arial, Helvetica, 
+
+<h6 if:true={newItem} style="font-size:medium ; text-align: center; font-weight:bold; font-family:Arial, Helvetica, 
 sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" >X
 {quantity} </h6> <br> 
 
-<div class="slds-align_absolute-center" >
-    <template for:each={prod.PricebookEntries} for:item="eachPrice">
-    <lightning-formatted-number key={eachPrice.id} format-style="currency" currency-code="USD"
-    value={eachPrice.UnitPrice} class="price1"
-    maximum-fraction-digits="0"></lightning-formatted-number>
-    </template>
+<div if:true={newItem} class="slds-align_absolute-center" >
+<template for:each={prod.PricebookEntries} for:item="eachPrice">
+<lightning-formatted-number key={eachPrice.id} format-style="currency" currency-code="USD"
+value={eachPrice.UnitPrice} class="price1"
+maximum-fraction-digits="0"></lightning-formatted-number>
+</template>
 </div>
 </div>
 <div class="slds-modal__footer slds-modal__footer_directional">
@@ -119,7 +126,6 @@ sans-serif; color:rgb(119, 98, 242);"  class="slds-modal__title slds-hyphenate" 
 <div key={prod.Id} class="slds-backdrop slds-backdrop_open" role="presentation"></div>
 </template>
 <!-- modal end --> 
-
 </template>
 </div>
 </template>
