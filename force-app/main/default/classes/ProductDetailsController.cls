@@ -53,4 +53,21 @@ Public static void changeQuantity(string cartItemId, Integer cartItemQuantity){
     update updcrtItem;
 }
 
+@AuraEnabled(cacheable=true)
+Public static List<Address_Book__c> getAddress(string customerUserId){
+Return [SELECT id, Name, Address__c, City__c, Country__c, Phone__c, PostalCode__c, State__c FROM Address_Book__c WHERE User__c=:customerUserId];
+}
+
+@AuraEnabled(cacheable=false) 
+Public static void addCustomerId(string addressBookId, string customerUserId){
+    Address_Book__c address = [SELECT id, User__c FROM Address_Book__c WHERE id=:addressBookId]; 
+    address.User__c=customerUserId;
+    update address;
+}
+
+@AuraEnabled(cacheable=false) 
+Public static void deleteAddress(string addressBookId){
+    Delete [SELECT id FROM Address_Book__c WHERE id=:addressBookId]; 
+}
+
 }

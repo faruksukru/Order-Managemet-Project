@@ -8,7 +8,9 @@ import changeQuantity from '@salesforce/apex/ProductDetailsController.changeQuan
 import {refreshApex} from '@salesforce/apex';
 //import ShowToastEvent. This is standart, copy/paste 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-export default class CartTile extends LightningElement {
+//import NavigationMixin. This is standart, copy/paste
+import {NavigationMixin} from 'lightning/navigation';
+export default class CartTile extends NavigationMixin(LightningElement) {
 
 //Variables
 @api recordId;//cart id to show all related cart items
@@ -20,6 +22,7 @@ cartTotalAmount=0;//to assign total amount of cart
 deletedCartItem;//cartitem id which will be deleted, when click the delete icon
 deletedCartItemInfo =[];//cartitem info which will be deleted, when click the delete icon
 isLoaded=false;//make spinner unvisible initially
+addressBookId='a06Do000000edpBIAQ';//this is hard code, CHANGE WITH USER ADDRESS BOOK ID
 //productIds =[]; not used now
 //allProducts=[];not used now
 
@@ -154,7 +157,16 @@ continueShopping(){
 
 }
 
-completeShopping(){
+completeShopping(event){
+//this.recId = event.target.name;
+this[NavigationMixin.Navigate]({
+type: 'standard__recordPage',
+attributes: {
+recordId: this.addressBookId,
+objectApiName: 'Address_Book__c',
+actionName: 'view'
+}
+});
 
 }
 }
